@@ -1,0 +1,7 @@
+gradlew.bat
+gradle/
+run/
+build/
+mcmodsrepo/
+.idea/
+.gradle

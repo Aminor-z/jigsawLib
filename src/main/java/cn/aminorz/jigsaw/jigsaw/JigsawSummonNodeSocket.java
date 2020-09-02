@@ -1,8 +1,8 @@
 package cn.aminorz.jigsaw.jigsaw;
 
-import jdk.nashorn.internal.ir.annotations.Immutable;
 import cn.aminorz.jigsaw.util.math.JigsawSectionPos;
 import cn.aminorz.jigsaw.util.math.SimpleDirection;
+import jdk.nashorn.internal.ir.annotations.Immutable;
 
 import java.util.function.Supplier;
 
@@ -13,6 +13,7 @@ public class JigsawSummonNodeSocket {
     private final JigsawSummonNodeSocketType type;
     private final int weight;
     private final IJigsawPattern jigsawPattern;
+    private boolean ignoreOccupation = false;
 
     /**
      * @param jigsawPattern self-jigsawPattern
@@ -23,6 +24,15 @@ public class JigsawSummonNodeSocket {
         this.type = new JigsawSummonNodeSocketType(type);
         this.weight = weight;
         this.jigsawPattern = jigsawPattern.get();
+    }
+
+    public boolean isIgnoreOccupation() {
+        return ignoreOccupation;
+    }
+
+    public JigsawSummonNodeSocket setIgnoreOccupation(boolean b) {
+        ignoreOccupation = b;
+        return this;
     }
 
     public int getWeight() {

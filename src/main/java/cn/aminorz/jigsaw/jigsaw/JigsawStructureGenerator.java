@@ -1,13 +1,13 @@
 package cn.aminorz.jigsaw.jigsaw;
 
 import cn.aminorz.jigsaw.exception.JigsawTypeException;
+import cn.aminorz.jigsaw.exception.JigsawUnsetException;
 import cn.aminorz.jigsaw.jigsaw.pool.JigsawOccupiedSectionPool;
 import cn.aminorz.jigsaw.util.WeightRandomItem;
 import cn.aminorz.jigsaw.util.WeightedRandom;
 import cn.aminorz.jigsaw.util.math.JigsawSectionPos;
 import cn.aminorz.jigsaw.util.math.SimpleDirection;
 import javafx.util.Pair;
-import cn.aminorz.jigsaw.exception.JigsawUnsetException;
 
 import java.util.LinkedList;
 import java.util.Map;
@@ -205,11 +205,13 @@ public class JigsawStructureGenerator implements IJigsawInitializable {
         for (JigsawSummonNodeSocket jigsawSummonNodeSocket : jigsawSummonNodeSockets) {
             boolean valid = true;
             JigsawSectionPos jigsawSummonNodeSocketPos = jigsawSectionPos.minus(jigsawSummonNodeSocket.getSocketSectionPos());
-            JigsawOccupiedSectionPool occupiedSections = jigsawSummonNodeSocket.getJigsawPattern().getOccupiedSectionPool();
-            for (JigsawSectionPos sectionPos : occupiedSections.keySet()) {
-                if (jigsawMapState.getMapState().containsKey(jigsawSectionPos.add(jigsawSummonNode.getSimpleDirection()).add(jigsawSummonNodeSocketPos).add(sectionPos))) {
-                    valid = false;
-                    break;
+            if(jigsawSummonNodeSocket.isIgnoreOccupation()){
+                JigsawOccupiedSectionPool occupiedSections = jigsawSummonNodeSocket.getJigsawPattern().getOccupiedSectionPool();
+                for (JigsawSectionPos sectionPos : occupiedSections.keySet()) {
+                    if (jigsawMapState.getMapState().containsKey(jigsawSectionPos.add(jigsawSummonNode.getSimpleDirection()).add(jigsawSummonNodeSocketPos).add(sectionPos))) {
+                        valid = false;
+                        break;
+                    }
                 }
             }
             if (!valid) break;

@@ -11,15 +11,18 @@ public class JigsawPool implements IJigsawInitializable {
     private HashSet<Class<? extends IJigsawPattern>> registeredJigsawPiece = new HashSet<>();
     private HashMap<JigsawSummonNode, HashSet<JigsawSummonNodeSocket>> reflectJMSP = new HashMap<>();
     private LinkedList<IJigsawPattern> jigsawPatterns;
+
     public JigsawPool(List<IJigsawPattern> list) {
         jigsawPatterns = new LinkedList<>();
         for (IJigsawPattern iJigsawPattern : list) {
-            register(()->iJigsawPattern);
+            register(() -> iJigsawPattern);
         }
     }
+
     public JigsawPool() {
         jigsawPatterns = new LinkedList<>();
     }
+
     @SafeVarargs
     public JigsawPool(Supplier<IJigsawPattern>... suppliers) {
         jigsawPatterns = new LinkedList<>();
@@ -27,6 +30,7 @@ public class JigsawPool implements IJigsawInitializable {
             register(supplier);
         }
     }
+
     public JigsawPool(LinkedList<IJigsawPattern> jigsawPatterns) {
         this.jigsawPatterns = jigsawPatterns;
     }
@@ -43,7 +47,7 @@ public class JigsawPool implements IJigsawInitializable {
     private void preCheck() {
         Iterator<IJigsawPattern> iter = jigsawPatterns.iterator();
         while (iter.hasNext()) {
-            IJigsawPattern source =iter.next();
+            IJigsawPattern source = iter.next();
             if (source.getOccupiedSectionPool().size() == 0) {
                 jigsawPatterns.remove(iter);
                 System.out.println(source.getClass().getSimpleName() + " no occupied section -> removed");
@@ -60,7 +64,7 @@ public class JigsawPool implements IJigsawInitializable {
             for (JigsawSummonNode sourceSummonNode : sourceSummonNodes) {
                 for (IJigsawPattern target : jigsawPatterns) {
                     JigsawSummonNodeSocket jigsawSummonNodeSocket = target.getSummonNodeSocketPool().get(sourceSummonNode.getJigsawSummonNodeType());
-                    if (jigsawSummonNodeSocket != null&&jigsawSummonNodeSocket.getSimpleDirection().equals(sourceSummonNode.getSimpleDirection().getOpposite())) {
+                    if (jigsawSummonNodeSocket != null && jigsawSummonNodeSocket.getSimpleDirection().equals(sourceSummonNode.getSimpleDirection().getOpposite())) {
                         JigsawSectionPos offsetSectionPos =
                                 sourceSummonNode.getNodeSectionPos().add(sourceSummonNode.getSimpleDirection());
                         //sourceSummonNode.getNodeSectionPos().minus(jigsawSummonNodeSocket.getSocketSectionPos());
@@ -72,17 +76,23 @@ public class JigsawPool implements IJigsawInitializable {
                                 positionCrashCheck = false;
                                 break;
                             }
-                            JigsawSide t = target.getSidePool().get(targetSectionPos);
+                            IJigsawPiece _t = target.getOccupiedSectionPool().get(targetSectionPos);
+                            if (_t == null) continue;
+                            JigsawSide t = _t.getJigsawSide();
                             if (t == null) continue;
                             for (Map.Entry<SimpleDirection, JigsawSideType> targetType : t.entrySet()) {
                                 //summonNode.Direction-summonNodeSocket.Direction==0;
-                                JigsawSide ttt = source.getSidePool().get(targetSectionPos.add(offsetSectionPos));
-                                if (ttt != null) {
-                                    JigsawSideType qwq = ttt.get(targetType.getKey().getOpposite());
-                                    if (qwq != null) {
-                                        if (!qwq.getValidSideTypes().contains(targetType.getValue())) {
-                                            vaildTypeCheck = false;
-                                            break;
+                                //JigsawSide ttt = source.getSidePool().get(targetSectionPos.add(offsetSectionPos));
+                                IJigsawPiece _ttt = source.getOccupiedSectionPool().get(targetSectionPos.add(offsetSectionPos));
+                                if (_ttt != null) {
+                                    JigsawSide ttt = _ttt.getJigsawSide();
+                                    if (ttt != null) {
+                                        JigsawSideType qwq = ttt.get(targetType.getKey().getOpposite());
+                                        if (qwq != null) {
+                                            if (!qwq.getValidSideTypes().contains(targetType.getValue())) {
+                                                vaildTypeCheck = false;
+                                                break;
+                                            }
                                         }
                                     }
                                 }

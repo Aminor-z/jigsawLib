@@ -4,7 +4,6 @@ import cn.aminorz.jigsaw.jigsaw.IJigsawPattern;
 import cn.aminorz.jigsaw.jigsaw.JigsawSummonNode;
 import cn.aminorz.jigsaw.jigsaw.JigsawSummonNodeSocket;
 import cn.aminorz.jigsaw.jigsaw.pool.JigsawOccupiedSectionPool;
-import cn.aminorz.jigsaw.jigsaw.pool.JigsawSidePool;
 import cn.aminorz.jigsaw.jigsaw.pool.JigsawSummonNodeSocketPool;
 import cn.aminorz.jigsaw.jigsaw.pool.JigsawSummonNodesPool;
 import cn.aminorz.jigsaw.test.piece.JigsawPieceB;
@@ -15,7 +14,6 @@ import cn.aminorz.jigsaw.util.math.SimpleDirection;
 public class JigsawPatternB implements IJigsawPattern {
     private static final JigsawSummonNodesPool summonNodes = new JigsawSummonNodesPool();
     private static final JigsawOccupiedSectionPool occupiedSectionPool = new JigsawOccupiedSectionPool();
-    private static final JigsawSidePool sidePool = new JigsawSidePool();
     private static final JigsawSummonNodeSocketPool summonNodeSocketPool = new JigsawSummonNodeSocketPool();
 
     static {
@@ -36,21 +34,12 @@ public class JigsawPatternB implements IJigsawPattern {
     }
 
     static {
-        sidePool.register(new JigsawSectionPos(0, 0, 0), JigsawPieceB_socketed_w.jigsawSide);
-    }
-
-    static {
         summonNodeSocketPool.register(
                 () -> new JigsawSummonNodeSocket(SimpleDirection.WEST,
                         new JigsawSectionPos(0, 0, 0),
                         "A-summon-e",
                         1, JigsawPatternB::new)
         );
-    }
-
-    @Override
-    public JigsawSidePool getSidePool() {
-        return sidePool;
     }
 
     @Override

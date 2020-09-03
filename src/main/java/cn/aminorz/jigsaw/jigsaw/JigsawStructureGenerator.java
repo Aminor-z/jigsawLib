@@ -205,7 +205,7 @@ public class JigsawStructureGenerator implements IJigsawInitializable {
         for (JigsawSummonNodeSocket jigsawSummonNodeSocket : jigsawSummonNodeSockets) {
             boolean valid = true;
             JigsawSectionPos jigsawSummonNodeSocketPos = jigsawSectionPos.minus(jigsawSummonNodeSocket.getSocketSectionPos());
-            if(jigsawSummonNodeSocket.isIgnoreOccupation()){
+            if (jigsawSummonNodeSocket.isIgnoreOccupation()) {
                 JigsawOccupiedSectionPool occupiedSections = jigsawSummonNodeSocket.getJigsawPattern().getOccupiedSectionPool();
                 for (JigsawSectionPos sectionPos : occupiedSections.keySet()) {
                     if (jigsawMapState.getMapState().containsKey(jigsawSectionPos.add(jigsawSummonNode.getSimpleDirection()).add(jigsawSummonNodeSocketPos).add(sectionPos))) {
@@ -215,23 +215,26 @@ public class JigsawStructureGenerator implements IJigsawInitializable {
                 }
             }
             if (!valid) break;
-            Set<Map.Entry<JigsawSectionPos, JigsawSide>> sides = jigsawSummonNodeSocket.getJigsawPattern().getSidePool().entrySet();
-            for (Map.Entry<JigsawSectionPos, JigsawSide> jigsawSectionPosJigsawSideEntry : sides) {
-                JigsawSectionPos sectionPos = jigsawSectionPosJigsawSideEntry.getKey();
-                Map<SimpleDirection, JigsawSideType> simpleDirectionJigsawSideTypeMap = jigsawSectionPosJigsawSideEntry.getValue();
-                for (Map.Entry<SimpleDirection, JigsawSideType> simpleDirectionJigsawSideTypeEntry : simpleDirectionJigsawSideTypeMap.entrySet()) {
-                    JigsawSectionPos targetPos = jigsawSummonNodeSocketPos.add(sectionPos).add(simpleDirectionJigsawSideTypeEntry.getKey());
-                    if (jigsawMapState.getMapState().containsKey(targetPos))
-                    //if directed section pos has piece;
-                    {
-                        //check type
-                        JigsawSide jigsawSide = jigsawMapState.getMapState().get(targetPos).getJigsawSide();
-                        if (jigsawSide != null) {
-                            JigsawSideType jigsawSideType = jigsawSide.get(simpleDirectionJigsawSideTypeEntry.getKey());
-                            if (jigsawSideType != null) {
-                                if (!jigsawSideType.getValidSideTypes().contains(simpleDirectionJigsawSideTypeEntry.getValue())) {
-                                    valid = false;
-                                    break;
+            Set<Map.Entry<JigsawSectionPos, IJigsawPiece>> sides = jigsawSummonNodeSocket.getJigsawPattern().getOccupiedSectionPool().entrySet();
+            //Set<Map.Entry<JigsawSectionPos, JigsawSide>> sides = jigsawSummonNodeSocket.getJigsawPattern().getSidePool().entrySet();
+            for (Map.Entry<JigsawSectionPos, IJigsawPiece> jigsawSectionPosIJigsawPieceEntry : sides) {
+                JigsawSectionPos sectionPos = jigsawSectionPosIJigsawPieceEntry.getKey();
+                Map<SimpleDirection, JigsawSideType> simpleDirectionJigsawSideTypeMap = jigsawSectionPosIJigsawPieceEntry.getValue().getJigsawSide();
+                if (simpleDirectionJigsawSideTypeMap != null) {
+                    for (Map.Entry<SimpleDirection, JigsawSideType> simpleDirectionJigsawSideTypeEntry : simpleDirectionJigsawSideTypeMap.entrySet()) {
+                        JigsawSectionPos targetPos = jigsawSummonNodeSocketPos.add(sectionPos).add(simpleDirectionJigsawSideTypeEntry.getKey());
+                        if (jigsawMapState.getMapState().containsKey(targetPos))
+                        //if directed section pos has piece;
+                        {
+                            //check type
+                            JigsawSide jigsawSide = jigsawMapState.getMapState().get(targetPos).getJigsawSide();
+                            if (jigsawSide != null) {
+                                JigsawSideType jigsawSideType = jigsawSide.get(simpleDirectionJigsawSideTypeEntry.getKey());
+                                if (jigsawSideType != null) {
+                                    if (!jigsawSideType.getValidSideTypes().contains(simpleDirectionJigsawSideTypeEntry.getValue())) {
+                                        valid = false;
+                                        break;
+                                    }
                                 }
                             }
                         }

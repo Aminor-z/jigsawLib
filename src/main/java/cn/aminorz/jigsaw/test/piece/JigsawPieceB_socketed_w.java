@@ -19,9 +19,4 @@ public class JigsawPieceB_socketed_w implements IJigsawPiece {
     public JigsawSide getJigsawSide() {
         return jigsawSide;
     }
-
-    @Override
-    public IJigsawPiece get() {
-        return null;
-    }
 }

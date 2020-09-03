@@ -1,0 +1,47 @@
+#if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "")package ${PACKAGE_NAME};#end
+#parse("File Header.java")
+
+import cn.aminorz.jigsaw.jigsaw.JigsawSide;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MutableBoundingBox;
+import net.minecraft.world.IWorld;
+import net.minecraft.world.gen.feature.structure.IStructurePieceType;
+import net.minecraft.world.gen.feature.template.TemplateManager;
+
+import java.util.Random;
+
+public class ${NAME} extends JigsawPiece {
+    //set your registered feature here
+    private static IStructurePieceType iStructurePieceType=null;
+    //set your nbt file here
+    private static ResourceLocation resourceLocation=null;
+
+    public ${NAME}(TemplateManager manager, BlockPos pos) {
+        super(iStructurePieceType, manager, pos);
+    }
+
+    public ${NAME}(TemplateManager manager, CompoundNBT nbt) {
+        super(iStructurePieceType, manager, nbt);
+    }
+
+    @Override
+    protected ResourceLocation getResourceLocation() {
+        return resourceLocation;
+    }
+
+    @Override
+    protected boolean isIgnoreEntities() {
+        return false;
+    }
+
+    @Override
+    public JigsawSide getJigsawSide() {
+        return null;
+    }
+
+    @Override
+    protected void handleDataMarker(String s, BlockPos blockPos, IWorld iWorld, Random random, MutableBoundingBox mutableBoundingBox) {
+    }
+}

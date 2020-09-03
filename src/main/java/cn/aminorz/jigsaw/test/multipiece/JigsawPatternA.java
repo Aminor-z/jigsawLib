@@ -17,7 +17,7 @@ public class JigsawPatternA implements IJigsawPattern {
     private static final JigsawSummonNodeSocketPool summonNodeSocketPool = new JigsawSummonNodeSocketPool();
 
     static {
-        summonNodes.register(() -> new JigsawSummonNode(
+        summonNodes.register(new JigsawSummonNode(
                 new JigsawSectionPos(0, 0, 0),
                 SimpleDirection.EAST,
                 "A-summon-e",

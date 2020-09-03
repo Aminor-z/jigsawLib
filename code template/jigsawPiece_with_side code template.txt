@@ -2,19 +2,15 @@ package cn.aminorz.jigsaw.test.piece;
 
 import cn.aminorz.jigsaw.jigsaw.IJigsawPiece;
 import cn.aminorz.jigsaw.jigsaw.JigsawSide;
-import cn.aminorz.jigsaw.jigsaw.JigsawSideType;
-import cn.aminorz.jigsaw.util.math.SimpleDirection;
 
-public class JigsawPieceA_socketed_n implements IJigsawPiece {
+public class ${NAME} implements IJigsawPiece {
     public static JigsawSide jigsawSide = new JigsawSide();
 
     static {
+    //register side type here
         jigsawSide.register(SimpleDirection.NORTH, new JigsawSideType("A_socket", "A_socket"));
     }
-
-    public JigsawPieceA_socketed_n() {
-    }
-
+    public ${NAME}{}
     @Override
     public JigsawSide getJigsawSide() {
         return jigsawSide;

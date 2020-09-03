@@ -3,8 +3,8 @@ package cn.aminorz.jigsaw.test.piece;
 import cn.aminorz.jigsaw.jigsaw.IJigsawPiece;
 import cn.aminorz.jigsaw.jigsaw.JigsawSide;
 
-public class JigsawPieceA implements IJigsawPiece {
-    public JigsawPieceA() {
+public class JigsawPieceAAAA implements IJigsawPiece {
+    public JigsawPieceAAAA() {
     }
 
     @Override

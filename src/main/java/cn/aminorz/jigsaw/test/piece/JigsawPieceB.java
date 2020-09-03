@@ -13,9 +13,4 @@ public class JigsawPieceB implements IJigsawPiece {
     public JigsawSide getJigsawSide() {
         return null;
     }
-
-    @Override
-    public IJigsawPiece get() {
-        return null;
-    }
 }

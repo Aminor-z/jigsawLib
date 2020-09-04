@@ -5,20 +5,12 @@ import cn.aminorz.jigsaw.util.math.JigsawSectionPos;
 import java.util.HashMap;
 import java.util.Map;
 
-public class JigsawMapState {
-    private final HashMap<JigsawSectionPos, IJigsawPiece> mapState = new HashMap<>();
+public class JigsawMapState extends HashMap<JigsawSectionPos, JigsawPiece> {
 
-    public HashMap<JigsawSectionPos, IJigsawPiece> getMapState() {
-        return mapState;
-    }
-
-    public void add(JigsawSectionPos jigsawSectionPos, IJigsawPiece piece) {
-        mapState.put(jigsawSectionPos, piece);
-    }
-
-    public void add(JigsawSectionPos jigsawSectionPos, IJigsawPattern jigsawPattern) {
-        for (Map.Entry<JigsawSectionPos, IJigsawPiece> entry : jigsawPattern.getOccupiedSectionPool().entrySet()) {
-            mapState.put(entry.getKey().add(jigsawSectionPos), entry.getValue());
-        }
+    public void register(JigsawSectionPos jigsawSectionPos, IJigsawPattern jigsawPattern) {
+        if (jigsawSectionPos != null && jigsawPattern != null && jigsawPattern.getOccupiedSectionPool() != null)
+            for (Map.Entry<JigsawSectionPos, JigsawPiece> entry : jigsawPattern.getOccupiedSectionPool().entrySet()) {
+                put(entry.getKey().add(jigsawSectionPos), entry.getValue());
+            }
     }
 }

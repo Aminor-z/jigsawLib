@@ -2,41 +2,50 @@ package cn.aminorz.jigsaw.jigsaw;
 
 import cn.aminorz.jigsaw.util.math.JigsawSectionPos;
 import javafx.util.Pair;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.gen.feature.structure.StructurePiece;
 
 import java.util.*;
 import java.util.function.Supplier;
 
-/**
- *
- * @param <T> the Vec3i type
- */
-public abstract class Jigsaw<T> {
+public abstract class Jigsaw {
     private final JigsawStructureGenerator jigsawStructureGenerator;
-    public void print(ArrayList<Pair<T, IJigsawPiece>> key){
-        System.out.println("cn.aminorz.jigsaw.Jigsaw["+this.getClass().getName()+"] print jigsawPool data:{");
-        key.sort(new Comparator<Pair<T, IJigsawPiece>>() {
 
-            @Override
-            public int compare(Pair<T, IJigsawPiece> o1, Pair<T, IJigsawPiece> o2) {
-                return o1.getKey().hashCode() - o2.getKey().hashCode();
-            }
-        });
-        for (Pair<T, IJigsawPiece> i : key) {
-            System.out.println("\t"+i.getKey().toString()+" => "+i.getValue().getClass().getSimpleName());
-        }
-        System.out.println("} => " +key.size()+" items.");
-    }
     public Jigsaw(JigsawStructureGenerator jigsawStructureGenerator) {
         this.jigsawStructureGenerator = jigsawStructureGenerator;
     }
 
-    public <V extends IJigsawPattern> ArrayList<Pair<T, IJigsawPiece>> generate(int x, int y, int z, Supplier<V> beginPattern) {
+    public void print(ArrayList<Pair<BlockPos, JigsawPiece>> key) {
+        System.out.println("cn.aminorz.jigsaw.Jigsaw[" + this.getClass().getName() + "] print jigsawPool data:{");
+        key.sort(new Comparator<Pair<BlockPos, JigsawPiece>>() {
+            @Override
+            public int compare(Pair<BlockPos, JigsawPiece> o1, Pair<BlockPos, JigsawPiece> o2) {
+                return o1.getKey().hashCode() - o2.getKey().hashCode();
+            }
+        });
+        for (Pair<BlockPos, JigsawPiece> i : key) {
+            System.out.println("\t" + i.getKey().toString() + " => " + i.getValue().getClass().getSimpleName());
+        }
+        System.out.println("} => " + key.size() + " items.");
+    }
+
+    public <V extends IJigsawPattern> ArrayList<Pair<BlockPos, JigsawPiece>> generate(int x, int y, int z, Supplier<V> beginPattern) {
         jigsawStructureGenerator.generate(JigsawSectionPos.ZERO, beginPattern.get());
-        HashMap<JigsawSectionPos, IJigsawPiece> t = jigsawStructureGenerator.getJigsawMapState().getMapState();
-        Set<Map.Entry<JigsawSectionPos, IJigsawPiece>> entrySet=t.entrySet();
-        ArrayList<Pair<T, IJigsawPiece>> result=new ArrayList<>();
-        for(Map.Entry<JigsawSectionPos, IJigsawPiece> entry : entrySet)
+        HashMap<JigsawSectionPos, JigsawPiece> t = jigsawStructureGenerator.getJigsawMapState();
+        Set<Map.Entry<JigsawSectionPos, JigsawPiece>> entrySet = t.entrySet();
+        ArrayList<Pair<BlockPos, JigsawPiece>> result = new ArrayList<>();
+        for (Map.Entry<JigsawSectionPos, JigsawPiece> entry : entrySet)
             result.add(new Pair<>(getActualPos(entry.getKey(), x, y, z), entry.getValue()));
+        return result;
+    }
+
+    public <V extends IJigsawPattern> List<StructurePiece> getComponents(int x, int y, int z, Supplier<V> beginPattern) {
+        ArrayList<Pair<BlockPos, JigsawPiece>> pieces = generate(x, y, z, beginPattern);
+        ArrayList<StructurePiece> result = new ArrayList<>(pieces.size());
+        for (Pair<BlockPos, JigsawPiece> piece : pieces) {
+            piece.getValue().setPosition(piece.getKey());
+            //result.add(piece.getValue());
+        }
         return result;
     }
 
@@ -47,5 +56,5 @@ public abstract class Jigsaw<T> {
      * @param z                start z
      * @return actual pos
      */
-    public abstract T getActualPos(JigsawSectionPos jigsawSectionPos, int x, int y, int z);
+    public abstract BlockPos getActualPos(JigsawSectionPos jigsawSectionPos, int x, int y, int z);
 }

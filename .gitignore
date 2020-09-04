@@ -4,4 +4,5 @@ run/
 build/
 mcmodsrepo/
 .idea/
-.gradle
+.gradle/
+logs/

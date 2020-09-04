@@ -24,9 +24,9 @@ public class JigsawPool implements IJigsawInitializable {
     }
 
     @SafeVarargs
-    public JigsawPool(Supplier<IJigsawPattern>... suppliers) {
+    public JigsawPool(Supplier<? extends IJigsawPattern>... suppliers) {
         jigsawPatterns = new LinkedList<>();
-        for (Supplier<IJigsawPattern> supplier : suppliers) {
+        for (Supplier<? extends IJigsawPattern> supplier : suppliers) {
             register(supplier);
         }
     }
@@ -116,7 +116,7 @@ public class JigsawPool implements IJigsawInitializable {
         }
     }
 
-    public void register(Supplier<IJigsawPattern> supplier) {
+    public void register(Supplier<? extends IJigsawPattern> supplier) {
         jigsawPatterns.add(supplier.get());
         registeredJigsawPiece.add(supplier.get().getClass());
     }

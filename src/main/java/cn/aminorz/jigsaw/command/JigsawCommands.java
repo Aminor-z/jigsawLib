@@ -1,7 +1,7 @@
 package cn.aminorz.jigsaw.command;
 
 import cn.aminorz.jigsaw.command.command.Command_Structure_List;
-import cn.aminorz.jigsaw.command.command.Command_Structure_Summon;
+import cn.aminorz.jigsaw.command.command.Command_Structure_Generate;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
@@ -45,6 +45,6 @@ public class JigsawCommands {
                                                         return suggest(GameData.getStructureFeatures().keySet().stream().map(ResourceLocation::toString), suggestionsBuilder);
                                                     }
                                                 })
-                                                .executes(Command_Structure_Summon.instance)))));
+                                                .executes(Command_Structure_Generate.instance)))));
     }
 }

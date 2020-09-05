@@ -22,8 +22,8 @@ import java.util.Locale;
 
 import static cn.aminorz.jigsaw.command.lib.CommandLib.getCurrentBlockPos;
 
-public class Command_Structure_Summon implements Command<CommandSource> {
-    public static Command_Structure_Summon instance = new Command_Structure_Summon();
+public class Command_Structure_Generate implements Command<CommandSource> {
+    public static Command_Structure_Generate instance = new Command_Structure_Generate();
 
     //TODO:完成指令生成建筑
     @Override

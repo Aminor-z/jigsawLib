@@ -29,12 +29,13 @@ public abstract class Jigsaw {
         System.out.println("} => " + key.size() + " items.");
     }
 
-    public <V extends IJigsawPattern> ArrayList<Pair<BlockPos, JigsawPiece>> generate(int x, int y, int z, Supplier<V> beginPattern) {
+    private <V extends IJigsawPattern> ArrayList<Pair<BlockPos, JigsawPiece>> generate(int x, int y, int z, Supplier<V> beginPattern) {
         jigsawStructureGenerator.generate(JigsawSectionPos.ZERO, beginPattern.get());
         HashMap<JigsawSectionPos, JigsawPiece> t = jigsawStructureGenerator.getJigsawMapState();
         Set<Map.Entry<JigsawSectionPos, JigsawPiece>> entrySet = t.entrySet();
         ArrayList<Pair<BlockPos, JigsawPiece>> result = new ArrayList<>();
         for (Map.Entry<JigsawSectionPos, JigsawPiece> entry : entrySet)
+            if(entry.getValue().getResourceLocation()!=null)
             result.add(new Pair<>(getActualPos(entry.getKey(), x, y, z), entry.getValue()));
         return result;
     }

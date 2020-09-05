@@ -37,7 +37,7 @@ public class JigsawCommands {
         dispatcher.register(
                 literal("jigsaw").then(
                         literal("structure").then(
-                                literal("summon").then(
+                                literal("generate").then(
                                         argument("structure_type", ResourceLocationArgument.resourceLocation())
                                                 .suggests(new SuggestionProvider<CommandSource>() {
                                                     @Override

@@ -12,6 +12,10 @@ public class JigsawPool implements IJigsawInitializable {
     private HashMap<JigsawSummonNode, HashSet<JigsawSummonNodeSocket>> reflectJMSP = new HashMap<>();
     private LinkedList<IJigsawPattern> jigsawPatterns;
 
+    public LinkedList<IJigsawPattern> getJigsawPatterns() {
+        return jigsawPatterns;
+    }
+
     public JigsawPool(List<IJigsawPattern> list) {
         jigsawPatterns = new LinkedList<>();
         for (IJigsawPattern iJigsawPattern : list) {
@@ -43,22 +47,20 @@ public class JigsawPool implements IJigsawInitializable {
         return reflectJMSP;
     }
 
-    @SuppressWarnings("SuspiciousMethodCalls")
     private void preCheck() {
         Iterator<IJigsawPattern> iter = jigsawPatterns.iterator();
         while (iter.hasNext()) {
             IJigsawPattern source = iter.next();
-            if (source.getOccupiedSectionPool().size() == 0) {
+            if (source.getOccupiedSectionPool().isEmpty()) {
                 jigsawPatterns.remove(iter);
-                System.out.println(source.getClass().getSimpleName() + " no occupied section -> removed");
-            } else if (source.getSummonNodes().size() == 0 && source.getSummonNodeSocketPool().size() == 0) {
+            } else if (source.getSummonNodes().isEmpty() && source.getSummonNodeSocketPool().isEmpty()) {
                 jigsawPatterns.remove(iter);
-                System.out.println(source.getClass().getSimpleName() + " no way to summon this -> removed");
             }
         }
     }
 
     public void init() {
+        preCheck();
         for (IJigsawPattern source : jigsawPatterns) {
             HashSet<JigsawSummonNode> sourceSummonNodes = source.getSummonNodes();
             for (JigsawSummonNode sourceSummonNode : sourceSummonNodes) {

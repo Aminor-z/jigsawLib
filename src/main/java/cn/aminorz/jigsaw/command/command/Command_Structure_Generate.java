@@ -33,7 +33,6 @@ public class Command_Structure_Generate implements Command<CommandSource> {
     }
 
     private void fun(CommandContext<CommandSource> context) {
-
             CommandSource source = context.getSource();
             BlockPos currentBlockPos = getCurrentBlockPos(context);
             ChunkPos currentChunkPos = new ChunkPos(currentBlockPos.getX() >> 4, currentBlockPos.getZ() >> 4);
@@ -61,9 +60,9 @@ public class Command_Structure_Generate implements Command<CommandSource> {
             StructureStart structureStart = structure.getStartFactory().create(structure, currentChunkPos.x, currentChunkPos.z, MutableBoundingBox.getNewBoundingBox(), i, chunkGenerator.getSeed());
             structureStart.init(chunkGenerator, templateManager, currentChunkPos.x, currentChunkPos.z, biome);
             StructureStart resultStructureStart = structureStart.isValid() ? structureStart : StructureStart.DUMMY;
-            chunk.putStructureStart(structure.getStructureName(), resultStructureStart);
             if (resultStructureStart != StructureStart.DUMMY) {
                 structureStart.generateStructure(world, chunkGenerator, sharedseedrandom, structureStart.getBoundingBox(), currentChunkPos);
+                chunk.putStructureStart(structure.getStructureName(), resultStructureStart);
                 long endTime = System.currentTimeMillis();
                 long time = endTime - startTime;
                 stc = new StringTextComponent("Success.\n");

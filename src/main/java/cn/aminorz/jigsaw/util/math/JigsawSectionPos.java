@@ -11,10 +11,10 @@ import jdk.nashorn.internal.ir.annotations.Immutable;
  */
 @Immutable
 public class JigsawSectionPos {
-    public static final JigsawSectionPos ZERO = new JigsawSectionPos(0, 0, 0);
-    public final int x;
-    public final int y;
-    public final int z;
+    public static  JigsawSectionPos ZERO = new JigsawSectionPos(0, 0, 0);
+    public int x;
+    public int y;
+    public int z;
 
     public JigsawSectionPos(int x, int y, int z) {
         this.x = x;
@@ -22,54 +22,54 @@ public class JigsawSectionPos {
         this.z = z;
     }
 
-    public final int getX() {
+    public int getX() {
         return x;
     }
 
-    public final int getY() {
+    public int getY() {
         return y;
     }
 
-    public final int getZ() {
+    public int getZ() {
         return z;
     }
 
-    public final JigsawSectionPos add(JigsawSectionPos jigsawSectionPos) {
+    public JigsawSectionPos add(JigsawSectionPos jigsawSectionPos) {
         return new JigsawSectionPos(this.x + jigsawSectionPos.x, this.y + jigsawSectionPos.y, this.z + jigsawSectionPos.z);
     }
 
-    public final JigsawSectionPos minus(JigsawSectionPos jigsawSectionPos) {
+    public JigsawSectionPos minus(JigsawSectionPos jigsawSectionPos) {
         return new JigsawSectionPos(this.x - jigsawSectionPos.x, this.y - jigsawSectionPos.y, this.z - jigsawSectionPos.z);
     }
 
-    public final JigsawSectionPos getEast() {
+    public JigsawSectionPos getEast() {
         return new JigsawSectionPos(this.x + 1, this.y, this.z);
     }
 
-    public final JigsawSectionPos getSouth() {
+    public  JigsawSectionPos getSouth() {
         return new JigsawSectionPos(this.x, this.y, this.z + 1);
     }
 
 
-    public final JigsawSectionPos getWest() {
+    public  JigsawSectionPos getWest() {
         return new JigsawSectionPos(this.x - 1, this.y, this.z);
     }
 
 
-    public final JigsawSectionPos getNorth() {
+    public  JigsawSectionPos getNorth() {
         return new JigsawSectionPos(this.x, this.y, this.z - 1);
     }
 
 
-    public final JigsawSectionPos getUp() {
+    public  JigsawSectionPos getUp() {
         return new JigsawSectionPos(this.x, this.y + 1, this.z);
     }
 
-    public final JigsawSectionPos getDown() {
+    public  JigsawSectionPos getDown() {
         return new JigsawSectionPos(this.x, this.y - 1, this.z);
     }
 
-    public final JigsawSectionPos add(SimpleDirection simpleDirection) {
+    public  JigsawSectionPos add(SimpleDirection simpleDirection) {
         switch (simpleDirection) {
             case NONE:
                 return this.clone();
@@ -90,14 +90,14 @@ public class JigsawSectionPos {
         }
     }
 
-    public final JigsawSectionPos getMinus() {
+    public  JigsawSectionPos getMinus() {
         return new JigsawSectionPos(-this.x, -this.y, -this.z);
     }
 
     //y max=64,x and y max= 4096
     @Override
     public int hashCode() {
-        return this.y << 25 + this.x << 13;
+        return this.y << 25 + this.x << 13+z;
     }
 
     @Override

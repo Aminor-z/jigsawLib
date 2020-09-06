@@ -47,11 +47,11 @@ public enum SimpleDirection {
         }
     }
 
-    public final int getValue() {
+    public int getValue() {
         return this.value;
     }
 
-    public final SimpleDirection getOpposite() {
+    public SimpleDirection getOpposite() {
         switch (this) {
             case EAST:
                 return WEST;
@@ -70,7 +70,7 @@ public enum SimpleDirection {
         }
     }
 
-    public final int toInt() {
+    public int toInt() {
         return value;
     }
 

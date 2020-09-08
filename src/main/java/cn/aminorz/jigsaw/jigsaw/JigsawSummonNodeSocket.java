@@ -8,11 +8,11 @@ import java.util.function.Supplier;
 
 @Immutable
 public class JigsawSummonNodeSocket {
-    private final SimpleDirection simpleDirection;
-    private final JigsawSectionPos socketSectionPos;
-    private final JigsawSummonNodeSocketType type;
-    private final int weight;
-    private final IJigsawPattern jigsawPattern;
+    private SimpleDirection simpleDirection;
+    private JigsawSectionPos socketSectionPos;
+    private JigsawSummonNodeSocketType type;
+    private int weight;
+    private IJigsawPattern jigsawPattern;
     private boolean ignoreOccupation = false;
 
     /**

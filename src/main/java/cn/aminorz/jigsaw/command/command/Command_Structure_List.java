@@ -11,7 +11,7 @@ import net.minecraft.util.text.StringTextComponent;
 
 import java.util.Map;
 
-import static cn.aminorz.jigsaw.command.lib.CommandLib.getCurrentBlockPos;
+import static cn.aminorz.jigsaw.command.lib.JigsawCommandLib.getCurrentBlockPos;
 
 public class Command_Structure_List implements Command<CommandSource> {
     public static Command_Structure_List instance = new Command_Structure_List();

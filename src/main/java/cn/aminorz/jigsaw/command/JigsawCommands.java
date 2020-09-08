@@ -33,7 +33,7 @@ public class JigsawCommands {
                         literal("structure").then(
                                 literal("list")
                                         .requires((commandSource) -> {
-                                            return commandSource.hasPermissionLevel(0);
+                                            return commandSource.hasPermissionLevel(2);
                                         })
                                         .executes(Command_Structure_List.instance))));
         dispatcher.register(
@@ -53,7 +53,7 @@ public class JigsawCommands {
                         literal("pattern").then(
                                 literal("p1")
                                         .requires((commandSource) -> {
-                                            return commandSource.hasPermissionLevel(0);
+                                            return commandSource.hasPermissionLevel(2);
                                         })
                                         .executes(Command_Pattern.POS_1))));
         dispatcher.register(
@@ -64,7 +64,7 @@ public class JigsawCommands {
                                                 argument("y",IntegerArgumentType.integer()).then(
                                                         argument("z",IntegerArgumentType.integer())
                                         .requires((commandSource) -> {
-                                            return commandSource.hasPermissionLevel(0);
+                                            return commandSource.hasPermissionLevel(2);
                                         })
                                         .executes(Command_Pattern.POS_1_SET)))))));
         dispatcher.register(
@@ -75,7 +75,7 @@ public class JigsawCommands {
                                                 argument("y",IntegerArgumentType.integer()).then(
                                                         argument("z",IntegerArgumentType.integer())
                                                                 .requires((commandSource) -> {
-                                                                    return commandSource.hasPermissionLevel(0);
+                                                                    return commandSource.hasPermissionLevel(2);
                                                                 })
                                                                 .executes(Command_Pattern.POS_2_SET)))))));
         dispatcher.register(
@@ -83,7 +83,7 @@ public class JigsawCommands {
                         literal("pattern").then(
                                 literal("p2")
                                         .requires((commandSource) -> {
-                                            return commandSource.hasPermissionLevel(0);
+                                            return commandSource.hasPermissionLevel(2);
                                         })
                                         .executes(Command_Pattern.POS_2))));
         dispatcher.register(
@@ -92,7 +92,7 @@ public class JigsawCommands {
                                 literal("create").then(
                                         argument("name", ResourceLocationArgument.resourceLocation())
                                                 .requires((commandSource) -> {
-                                                    return commandSource.hasPermissionLevel(0);
+                                                    return commandSource.hasPermissionLevel(2);
                                                 })
                                                 .executes(Command_Pattern.CREATE)))));
         dispatcher.register(
@@ -101,7 +101,7 @@ public class JigsawCommands {
                                 literal("load").then(
                                         argument("name", ResourceLocationArgument.resourceLocation())
                                                 .requires((commandSource) -> {
-                                                    return commandSource.hasPermissionLevel(0);
+                                                    return commandSource.hasPermissionLevel(2);
                                                 })
                                                 .executes(Command_Pattern.LOAD)))));
     }

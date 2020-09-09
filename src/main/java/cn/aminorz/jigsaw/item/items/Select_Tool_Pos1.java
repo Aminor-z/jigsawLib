@@ -27,9 +27,8 @@ public class Select_Tool_Pos1 extends Item {
         ItemStack heldItem = playerEntity.getHeldItem(hand);
         RayTraceResult rayTraceResult = rayTrace(world, playerEntity, RayTraceContext.FluidMode.SOURCE_ONLY);
         if (!world.isRemote && rayTraceResult.getType() == RayTraceResult.Type.BLOCK) {
-            BlockRayTraceResult traceResult = (BlockRayTraceResult) rayTraceResult;
-            BlockPos blockPos = traceResult.getPos().subtract(traceResult.getFace().getDirectionVec());
-            Command_Pattern.p2 = blockPos;
+            BlockPos blockPos = ((BlockRayTraceResult) rayTraceResult).getPos();
+            Command_Pattern.p1 = blockPos;
             playerEntity.sendMessage(new StringTextComponent(blockPos.toString()));
         }
         return ActionResult.resultPass(heldItem);

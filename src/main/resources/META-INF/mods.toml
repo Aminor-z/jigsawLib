@@ -2,7 +2,7 @@ modLoader="javafml"
 loaderVersion="[31,)"
 [[mods]]
 modId="jigsaw"
-version="1.15.2-1.2"
+version="1.1"
 displayName="Aminor_z's Jigsaw Lib"
 logoFile="banner.png"
 authors="Aminor_z"

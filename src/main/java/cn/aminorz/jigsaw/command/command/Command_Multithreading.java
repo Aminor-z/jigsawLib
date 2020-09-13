@@ -30,7 +30,7 @@ public class Command_Multithreading {
         public int run(CommandContext<CommandSource> context) {
             state = false;
             context.getSource().sendFeedback(
-                    new StringTextComponent("[JigsawLib]: Command_Multithreading ->  ").appendText(String.valueOf(state)), false);
+                    new StringTextComponent("[JigsawLib]: use_Command_Multithreading ->  ").appendText(String.valueOf(state)), false);
             return 0;
         }
     }
@@ -39,7 +39,7 @@ public class Command_Multithreading {
         @Override
         public int run(CommandContext<CommandSource> context) {
             context.getSource().sendFeedback(
-                    new StringTextComponent("[JigsawLib]: Command_Multithreading ->  ").appendText(String.valueOf(state)), false);
+                    new StringTextComponent("[JigsawLib]: use_Command_Multithreading --  ").appendText(String.valueOf(state)), false);
             return 0;
         }
     }

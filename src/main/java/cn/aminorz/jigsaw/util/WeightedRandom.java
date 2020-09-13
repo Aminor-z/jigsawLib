@@ -1,10 +1,9 @@
 package cn.aminorz.jigsaw.util;
 
 
-import cn.aminorz.jigsaw.util.WeightRandomItem;
-
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 
 public class WeightedRandom<T> extends HashMap<Integer, T> {
     private Integer weightSum = 0;
@@ -23,7 +22,7 @@ public class WeightedRandom<T> extends HashMap<Integer, T> {
     public final T getRandomObj() {
         if (size() == 0) return null;
         int random = (int) (Math.random() * weightSum);
-        for (Entry<Integer, T> entry : entrySet()) {
+        for (Map.Entry<Integer, T> entry : entrySet()) {
             if (entry.getKey() >= random) return entry.getValue();
         }
         return null;

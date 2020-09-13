@@ -14,7 +14,7 @@ import java.util.Map;
 import static cn.aminorz.jigsaw.command.lib.JigsawCommandLib.getCurrentBlockPos;
 
 public class Command_Structure_List implements Command<CommandSource> {
-    public static cn.aminorz.jigsaw.command.command.Command_Structure_List instance = new cn.aminorz.jigsaw.command.command.Command_Structure_List();
+    public static Command_Structure_List instance = new Command_Structure_List();
     @Override
     public int run(CommandContext<CommandSource> context) throws CommandSyntaxException {
         BlockPos currentBlockPos=getCurrentBlockPos(context);

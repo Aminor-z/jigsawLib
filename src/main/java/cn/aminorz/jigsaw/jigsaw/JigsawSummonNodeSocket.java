@@ -1,7 +1,5 @@
 package cn.aminorz.jigsaw.jigsaw;
 
-import cn.aminorz.jigsaw.jigsaw.IJigsawPattern;
-import cn.aminorz.jigsaw.jigsaw.JigsawSummonNodeSocketType;
 import cn.aminorz.jigsaw.util.math.JigsawSectionPos;
 import cn.aminorz.jigsaw.util.math.SimpleDirection;
 import jdk.nashorn.internal.ir.annotations.Immutable;
@@ -20,7 +18,7 @@ public class JigsawSummonNodeSocket {
     /**
      * @param jigsawPattern self-jigsawPattern
      */
-    public JigsawSummonNodeSocket(JigsawSectionPos socketSectionPos, SimpleDirection simpleDirection, String type, int weight, Supplier<IJigsawPattern> jigsawPattern) {
+    public JigsawSummonNodeSocket(SimpleDirection simpleDirection, JigsawSectionPos socketSectionPos, String type, int weight, Supplier<IJigsawPattern> jigsawPattern) {
         this.simpleDirection = simpleDirection;
         this.socketSectionPos = socketSectionPos;
         this.type = new JigsawSummonNodeSocketType(type);
@@ -32,7 +30,7 @@ public class JigsawSummonNodeSocket {
         return ignoreOccupation;
     }
 
-    public cn.aminorz.jigsaw.jigsaw.JigsawSummonNodeSocket setIgnoreOccupation(boolean b) {
+    public JigsawSummonNodeSocket setIgnoreOccupation(boolean b) {
         ignoreOccupation = b;
         return this;
     }

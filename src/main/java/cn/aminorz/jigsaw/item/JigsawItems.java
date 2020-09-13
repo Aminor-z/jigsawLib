@@ -12,7 +12,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class JigsawItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, "jigsaw");
-    public static final ItemGroup itemGroup = new ItemGroup(ItemGroup.getGroupCountSafe(), "jigsaw_group") {
+    public static final ItemGroup itemGroup = new ItemGroup(ItemGroup.GROUPS.length, "jigsaw_group") {
         @Override
         public ItemStack createIcon() {
             return new ItemStack(Blocks.STRUCTURE_BLOCK);

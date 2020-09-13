@@ -12,6 +12,10 @@ public class JigsawPool implements IJigsawInitializable {
     private HashMap<JigsawSummonNode, HashSet<JigsawSummonNodeSocket>> reflectJMSP = new HashMap<>();
     private LinkedList<IJigsawPattern> jigsawPatterns;
 
+    public LinkedList<IJigsawPattern> getJigsawPatterns() {
+        return jigsawPatterns;
+    }
+
     public JigsawPool(List<IJigsawPattern> list) {
         jigsawPatterns = new LinkedList<>();
         for (IJigsawPattern iJigsawPattern : list) {
@@ -33,10 +37,6 @@ public class JigsawPool implements IJigsawInitializable {
 
     public JigsawPool(LinkedList<IJigsawPattern> jigsawPatterns) {
         this.jigsawPatterns = jigsawPatterns;
-    }
-
-    public LinkedList<IJigsawPattern> getJigsawPatterns() {
-        return jigsawPatterns;
     }
 
     public HashSet<Class<? extends IJigsawPattern>> getRegisteredJigsawPiece() {
@@ -65,58 +65,51 @@ public class JigsawPool implements IJigsawInitializable {
             HashSet<JigsawSummonNode> sourceSummonNodes = source.getSummonNodes();
             for (JigsawSummonNode sourceSummonNode : sourceSummonNodes) {
                 for (IJigsawPattern target : jigsawPatterns) {
-                    HashMap<JigsawSummonNodeSocketType, JigsawSummonNodeSocket> jigsawSummonNodeSockets = target.getSummonNodeSocketPool().get(sourceSummonNode.getSimpleDirection().getOpposite());
-                    //JigsawSummonNodeSocket jigsawSummonNodeSocket = target.getSummonNodeSocketPool().get(sourceSummonNode.getJigsawSummonNodeType());
-                    if (jigsawSummonNodeSockets != null) {
-                        JigsawSummonNodeSocket jigsawSummonNodeSocket = jigsawSummonNodeSockets.get(sourceSummonNode.getJigsawSummonNodeType());
-                        if(jigsawSummonNodeSocket!=null)
-                        {
-                            //TODO:TEST
-                            /*JigsawSectionPos offsetSectionPos =
-                                    sourceSummonNode.getNodeSectionPos().add(sourceSummonNode.getSimpleDirection());*/
-                            JigsawSectionPos offsetSectionPos =
-                                    sourceSummonNode.getNodeSectionPos().add(sourceSummonNode.getSimpleDirection()).subtract(jigsawSummonNodeSocket.getSocketSectionPos());
-                            //sourceSummonNode.getNodeSectionPos().minus(jigsawSummonNodeSocket.getSocketSectionPos());
-                            //position crash check
-                            boolean positionCrashCheck = true;
-                            boolean vaildTypeCheck = true;
-                            for (JigsawSectionPos targetSectionPos : target.getOccupiedSectionPool().keySet()) {
-                                if (source.getOccupiedSectionPool().containsKey(targetSectionPos.add(offsetSectionPos))) {
-                                    positionCrashCheck = false;
-                                    break;
-                                }
-                                IJigsawPiece _t = target.getOccupiedSectionPool().get(targetSectionPos);
-                                if (_t == null) continue;
-                                JigsawSide t = _t.getJigsawSide();
-                                if (t == null) continue;
-                                for (Map.Entry<SimpleDirection, JigsawSideType> targetType : t.entrySet()) {
-                                    //summonNode.Direction-summonNodeSocket.Direction==0;
-                                    //JigsawSide ttt = source.getSidePool().get(targetSectionPos.add(offsetSectionPos));
-                                    IJigsawPiece _ttt = source.getOccupiedSectionPool().get(targetSectionPos.add(offsetSectionPos));
-                                    if (_ttt != null) {
-                                        JigsawSide ttt = _ttt.getJigsawSide();
-                                        if (ttt != null) {
-                                            JigsawSideType qwq = ttt.get(targetType.getKey().getOpposite());
-                                            if (qwq != null) {
-                                                if (!qwq.getValidSideTypes().contains(targetType.getValue())) {
-                                                    vaildTypeCheck = false;
-                                                    break;
-                                                }
+                    JigsawSummonNodeSocket jigsawSummonNodeSocket = target.getSummonNodeSocketPool().get(sourceSummonNode.getJigsawSummonNodeType());
+                    if (jigsawSummonNodeSocket != null && jigsawSummonNodeSocket.getSimpleDirection().equals(sourceSummonNode.getSimpleDirection().getOpposite())) {
+                        JigsawSectionPos offsetSectionPos =
+                                sourceSummonNode.getNodeSectionPos().add(sourceSummonNode.getSimpleDirection());
+                        //sourceSummonNode.getNodeSectionPos().minus(jigsawSummonNodeSocket.getSocketSectionPos());
+                        //position crash check
+                        boolean positionCrashCheck = true;
+                        boolean vaildTypeCheck = true;
+                        for (JigsawSectionPos targetSectionPos : target.getOccupiedSectionPool().keySet()) {
+                            if (source.getOccupiedSectionPool().containsKey(targetSectionPos.add(offsetSectionPos))) {
+                                positionCrashCheck = false;
+                                break;
+                            }
+                            IJigsawPiece _t = target.getOccupiedSectionPool().get(targetSectionPos);
+                            if (_t == null) continue;
+                            JigsawSide t = _t.getJigsawSide();
+                            if (t == null) continue;
+                            for (Map.Entry<SimpleDirection, JigsawSideType> targetType : t.entrySet()) {
+                                //summonNode.Direction-summonNodeSocket.Direction==0;
+                                //JigsawSide ttt = source.getSidePool().get(targetSectionPos.add(offsetSectionPos));
+                                IJigsawPiece _ttt = source.getOccupiedSectionPool().get(targetSectionPos.add(offsetSectionPos));
+                                if (_ttt != null) {
+                                    JigsawSide ttt = _ttt.getJigsawSide();
+                                    if (ttt != null) {
+                                        JigsawSideType qwq = ttt.get(targetType.getKey().getOpposite());
+                                        if (qwq != null) {
+                                            if (!qwq.getValidSideTypes().contains(targetType.getValue())) {
+                                                vaildTypeCheck = false;
+                                                break;
                                             }
                                         }
                                     }
                                 }
-                                if (!vaildTypeCheck) break;
+                                break;
                             }
-                            if (positionCrashCheck && vaildTypeCheck) {
-                                HashSet<JigsawSummonNodeSocket> t = reflectJMSP.get(sourceSummonNode);
-                                if (t != null)
-                                    t.add(jigsawSummonNodeSocket);
-                                else {
-                                    HashSet<JigsawSummonNodeSocket> tt = new HashSet<JigsawSummonNodeSocket>();
-                                    tt.add(jigsawSummonNodeSocket);
-                                    reflectJMSP.put(sourceSummonNode, tt);
-                                }
+                            if (!vaildTypeCheck) break;
+                        }
+                        if (positionCrashCheck && vaildTypeCheck) {
+                            HashSet<JigsawSummonNodeSocket> t = reflectJMSP.get(sourceSummonNode);
+                            if (t != null)
+                                t.add(jigsawSummonNodeSocket);
+                            else {
+                                HashSet<JigsawSummonNodeSocket> tt = new HashSet<JigsawSummonNodeSocket>();
+                                tt.add(jigsawSummonNodeSocket);
+                                reflectJMSP.put(sourceSummonNode, tt);
                             }
                         }
                     }

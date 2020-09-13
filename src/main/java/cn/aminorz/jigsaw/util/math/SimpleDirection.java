@@ -20,7 +20,7 @@ public enum SimpleDirection {
     }
 
     @SuppressWarnings({"finally", "ReturnInsideFinallyBlock"})
-    public static cn.aminorz.jigsaw.util.math.SimpleDirection get(int i) {
+    public static SimpleDirection get(int i) {
         switch (i) {
             case 0b000000:
                 return NONE;
@@ -51,7 +51,7 @@ public enum SimpleDirection {
         return this.value;
     }
 
-    public cn.aminorz.jigsaw.util.math.SimpleDirection getOpposite() {
+    public SimpleDirection getOpposite() {
         switch (this) {
             case EAST:
                 return WEST;

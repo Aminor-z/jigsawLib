@@ -1,13 +1,11 @@
 package cn.aminorz.jigsaw.command.command;
 
 import cn.aminorz.jigsaw.command.thread.CommandThread;
-import cn.aminorz.jigsaw.jigsaw.JigsawPiece;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.command.CommandSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SharedSeedRandom;
-import net.minecraft.util.concurrent.TickDelayedTask;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MutableBoundingBox;
@@ -30,16 +28,14 @@ import java.util.Random;
 import static cn.aminorz.jigsaw.command.lib.JigsawCommandLib.getCurrentBlockPos;
 
 public class Command_Structure_Generate implements Command<CommandSource> {
-    public static cn.aminorz.jigsaw.command.command.Command_Structure_Generate instance = new cn.aminorz.jigsaw.command.command.Command_Structure_Generate();
+    public static Command_Structure_Generate instance = new Command_Structure_Generate();
 
     //TODO:完成指令生成建筑
     @Override
     public int run(CommandContext<CommandSource> context) {
-        fun(context);
-        /*
         CommandThread.submit(
                 () -> fun(context)
-        );*/
+        );
         return 0;
     }
 
@@ -47,10 +43,8 @@ public class Command_Structure_Generate implements Command<CommandSource> {
         CommandSource source = context.getSource();
         BlockPos currentBlockPos = getCurrentBlockPos(context);
         ChunkPos currentChunkPos = new ChunkPos(currentBlockPos.getX() >> 4, currentBlockPos.getZ() >> 4);
-        String target_string = context.getArgument("structure_type", ResourceLocation.class).toString().toLowerCase(Locale.ROOT);
-        String[] target_string_array=target_string.split(":");
-        String target = target_string_array[0].equals("minecraft") ? target_string_array[1] : target_string;
-        //String target = context.getArgument("structure_type", ResourceLocation.class).toString().toLowerCase(Locale.ROOT);
+        String[] target_string_array = context.getArgument("structure_type", ResourceLocation.class).toString().toLowerCase(Locale.ROOT).split(":");
+        String target = target_string_array.length > 1 ? target_string_array[1] : target_string_array[0];
         Structure<?> structure = Feature.STRUCTURES.get(target);
         StringTextComponent stc;
         if (structure == null) {
@@ -74,8 +68,8 @@ public class Command_Structure_Generate implements Command<CommandSource> {
         StructureStart structureStart = structure.getStartFactory().create(structure, currentChunkPos.x, currentChunkPos.z, MutableBoundingBox.getNewBoundingBox(), i, chunkGenerator.getSeed());
         structureStart.init(chunkGenerator, templateManager, currentChunkPos.x, currentChunkPos.z, biome);
         StructureStart resultStructureStart = structureStart.isValid() ? structureStart : StructureStart.DUMMY;
-        long step1_endtime = System.currentTimeMillis();
-        context.getSource().sendFeedback(new StringTextComponent("[Generate-Step 1]: Finish in " + String.valueOf(step1_endtime - startTime) + " ms."), false);
+        long step1_endtime=System.currentTimeMillis();
+        context.getSource().sendFeedback(new StringTextComponent("[Generate-Step 1]: Finish in "+String.valueOf(step1_endtime-startTime)+" ms."), false);
         if (resultStructureStart != StructureStart.DUMMY) {
             int size = resultStructureStart.getComponents().size();
             if (size > 30) {
@@ -87,25 +81,22 @@ public class Command_Structure_Generate implements Command<CommandSource> {
                         ), false
                 );
             }
-            context.getSource().sendFeedback(new StringTextComponent("[Generate-Step 2]: Strat put blocks to world. If this step don't feedback any for long, it might failed."), false);
-            //generateStructure(structureStart.getComponents(), world, chunkGenerator, sharedseedrandom, structureStart.getBoundingBox(), currentChunkPos);
+            context.getSource().sendFeedback(new StringTextComponent("[Generate-Step 2]: Strat put blocks to world..."), false);
             generateStructure(structureStart.getComponents(), world, chunkGenerator, sharedseedrandom, structureStart.getBoundingBox(), currentChunkPos);
-            context.getSource().sendFeedback(new StringTextComponent("[Generate-Step 2]: Finish in " + String.valueOf(System.currentTimeMillis() - step1_endtime) + " ms."), false);
-            context.getSource().sendFeedback(new StringTextComponent("").applyTextStyle(TextFormatting.GREEN).appendText("[Generate]: Success."), false);
+            context.getSource().sendFeedback(new StringTextComponent("[Generate-Step 2]: Finish in "+String.valueOf(System.currentTimeMillis()-step1_endtime)+" ms."), false);
+            context.getSource().sendFeedback(new StringTextComponent("").applyTextStyle(TextFormatting.GREEN).appendText("[Generate]: Success."),false) ;
+
         } else {
             context.getSource().sendErrorMessage(new StringTextComponent("[Generate-Error]: Can not generate [" + target + "] because the structure think the current position is invalid."));
         }
-        context.getSource().sendFeedback(new StringTextComponent("[Generate]: Finished in " + (System.currentTimeMillis() - startTime) + " ms"), false);
+        context.getSource().sendFeedback(new StringTextComponent("[Generate]: Finished in " +(System.currentTimeMillis()-startTime) + " ms"),false);
         source.sendFeedback(stc, false);
     }
 
     private void generateStructure(List<StructurePiece> components, ServerWorld serverWorld, ChunkGenerator<?> chunkGenerator, Random random, MutableBoundingBox mutableBoundingBox, ChunkPos chunkPos) {
         //synchronized (components) {
         for (StructurePiece structurepiece : components)
-            if(!structurepiece.create(serverWorld, chunkGenerator, random, mutableBoundingBox, chunkPos))
-            {
-
-            }
+            structurepiece.create(serverWorld, chunkGenerator, random, mutableBoundingBox, chunkPos);
         // }
     }
 }

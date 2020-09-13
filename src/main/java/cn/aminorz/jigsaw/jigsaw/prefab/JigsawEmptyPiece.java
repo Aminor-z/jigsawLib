@@ -1,7 +1,8 @@
-#if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "")package ${PACKAGE_NAME};#end
-#parse("File Header.java")
+package cn.aminorz.jigsaw.jigsaw.prefab;
 
+import cn.aminorz.jigsaw.jigsaw.JigsawPiece;
 import cn.aminorz.jigsaw.jigsaw.JigsawSide;
+import jdk.nashorn.internal.ir.annotations.Immutable;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -11,24 +12,19 @@ import net.minecraft.world.gen.feature.structure.IStructurePieceType;
 import net.minecraft.world.gen.feature.template.TemplateManager;
 
 import java.util.Random;
-
-public class ${NAME} extends JigsawPiece {
-    //set your registered feature here
-    private static IStructurePieceType iStructurePieceType=null;
-    //set your nbt file here
-    private static ResourceLocation resourceLocation=null;
-
-    public ${NAME}(TemplateManager manager, BlockPos pos) {
-        super(iStructurePieceType, manager, pos);
+@Immutable
+public class JigsawEmptyPiece extends JigsawPiece {
+    public JigsawEmptyPiece(TemplateManager manager, BlockPos pos) {
+        super(null, manager, pos);
     }
 
-    public ${NAME}(TemplateManager manager, CompoundNBT nbt) {
-        super(iStructurePieceType, manager, nbt);
+    public JigsawEmptyPiece(TemplateManager manager, CompoundNBT nbt) {
+        super(null, manager, nbt);
     }
 
     @Override
     protected ResourceLocation getResourceLocation() {
-        return resourceLocation;
+        return null;
     }
 
     @Override

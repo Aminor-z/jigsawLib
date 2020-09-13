@@ -15,8 +15,8 @@ public abstract class JigsawType {
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
-        } else if (obj instanceof cn.aminorz.jigsaw.jigsaw.JigsawType) {
-            cn.aminorz.jigsaw.jigsaw.JigsawType jigsawAccessType = (cn.aminorz.jigsaw.jigsaw.JigsawType) obj;
+        } else if (obj instanceof JigsawType) {
+            JigsawType jigsawAccessType = (JigsawType) obj;
             return this.getType().equals(jigsawAccessType.getType());
         } else {
             return false;

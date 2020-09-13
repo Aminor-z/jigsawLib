@@ -1,13 +1,9 @@
 package cn.aminorz.jigsaw.jigsaw;
 
-import cn.aminorz.jigsaw.jigsaw.IJigsawPattern;
-import cn.aminorz.jigsaw.jigsaw.JigsawPiece;
-import cn.aminorz.jigsaw.jigsaw.JigsawStructureGenerator;
 import cn.aminorz.jigsaw.util.math.JigsawSectionPos;
 import javafx.util.Pair;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.gen.feature.structure.StructurePiece;
-import net.minecraft.world.gen.feature.template.TemplateManager;
 
 import java.util.*;
 import java.util.function.Supplier;
@@ -44,12 +40,12 @@ public abstract class Jigsaw {
         return result;
     }
 
-    public <V extends IJigsawPattern> List<StructurePiece> getComponents(int x, int y, int z, Supplier<V> beginPattern, TemplateManager templateManager) {
+    public <V extends IJigsawPattern> List<StructurePiece> getComponents(int x, int y, int z, Supplier<V> beginPattern) {
         ArrayList<Pair<BlockPos, JigsawPiece>> pieces = generate(x, y, z, beginPattern);
         ArrayList<StructurePiece> result = new ArrayList<>(pieces.size());
         for (Pair<BlockPos, JigsawPiece> piece : pieces) {
-            result.add(piece.getValue().setPosition(piece.getKey()).loadTemplate(templateManager));
-            System.out.println(piece.getValue().getClass().getSimpleName()+" -> "+piece.getKey());
+            piece.getValue().setPosition(piece.getKey());
+            //result.add(piece.getValue());
         }
         return result;
     }

@@ -1,7 +1,7 @@
 modLoader="javafml"
 loaderVersion="[31,)"
 [[mods]]
-modId="cn.aminorz.jigsaw.jigsaw"
+modId="jigsaw"
 version="1.15.2-1.2"
 displayName="Aminor_z's Jigsaw Lib"
 logoFile="banner.png"
@@ -9,13 +9,13 @@ authors="Aminor_z"
 description='''
 
 '''
-[[dependencies.cn.aminorz.jigsaw.jigsaw]]
+[[dependencies.jigsaw]]
     modId="forge"
     mandatory=true
     versionRange="[31,)"
     ordering="NONE"
     side="BOTH"
-[[dependencies.cn.aminorz.jigsaw.jigsaw]]
+[[dependencies.jigsaw]]
     modId="minecraft"
     mandatory=true
     versionRange="[1.15.2]"

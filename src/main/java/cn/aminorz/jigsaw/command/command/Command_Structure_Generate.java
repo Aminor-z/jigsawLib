@@ -33,9 +33,12 @@ public class Command_Structure_Generate implements Command<CommandSource> {
     //TODO:完成指令生成建筑
     @Override
     public int run(CommandContext<CommandSource> context) {
-        CommandThread.submit(
-                () -> fun(context)
-        );
+        if (Command_Multithreading.state())
+            CommandThread.submit(() -> {
+                fun(context);
+            });
+        else
+            fun(context);
         return 0;
     }
 

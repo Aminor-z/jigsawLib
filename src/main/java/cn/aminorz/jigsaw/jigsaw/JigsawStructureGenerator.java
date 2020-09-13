@@ -128,8 +128,6 @@ public class JigsawStructureGenerator implements IJigsawInitializable {
                         Pair<JigsawSectionPos, IJigsawPattern> patternPair = weightedRandom.getRandomObj();
                         if (patternPair != null) {
                             IJigsawPattern iJigsawPattern = patternPair.getValue();
-                            //offset pos patternPair.getKey();
-                            //actual pos(start point) startPos.add(patternPair.getKey()).add(summonNode.getSimpleDirection());
                             JigsawSectionPos actualPos = currentPos.add(patternPair.getKey()).add(summonNode.getSimpleDirection());
                             jigsawMapState.register(actualPos, iJigsawPattern);
                             ++counter;

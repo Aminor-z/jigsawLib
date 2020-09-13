@@ -11,6 +11,7 @@ import net.minecraft.world.gen.feature.template.Template;
 import net.minecraft.world.gen.feature.template.TemplateManager;
 
 public abstract class JigsawPiece extends TemplateStructurePiece implements IJigsawPiece {
+    public JigsawPiece(){super(null,0);}
     public JigsawPiece(IStructurePieceType iStructurePieceType) {
         super(iStructurePieceType, 0);
     }

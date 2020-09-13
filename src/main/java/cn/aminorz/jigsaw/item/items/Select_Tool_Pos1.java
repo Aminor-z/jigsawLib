@@ -17,21 +17,18 @@ import net.minecraft.world.World;
 
 public class Select_Tool_Pos1 extends Item {
 
-    public Select_Tool_Pos1() {
-        super(new Properties().group(JigsawItems.itemGroup)
-        );
-    }
+    public Select_Tool_Pos1() { super(new Properties().group(JigsawItems.itemGroup)); }
 
     @Override
     public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity playerEntity, Hand hand) {
-        ItemStack heldItem = playerEntity.getHeldItem(hand);
         RayTraceResult rayTraceResult = rayTrace(world, playerEntity, RayTraceContext.FluidMode.SOURCE_ONLY);
         if (!world.isRemote && rayTraceResult.getType() == RayTraceResult.Type.BLOCK) {
             BlockPos blockPos = ((BlockRayTraceResult) rayTraceResult).getPos();
             Command_Pattern.p1 = blockPos;
-            playerEntity.sendMessage(new StringTextComponent(blockPos.toString()));
+            playerEntity.sendMessage(new StringTextComponent("[Jigsaw-Pattern]: P2 set to -> ").appendText(blockPos.toString()));
+            return ActionResult.resultSuccess(playerEntity.getHeldItem(hand));
         }
-        return ActionResult.resultPass(heldItem);
+        return ActionResult.resultPass(playerEntity.getHeldItem(hand));
     }
 
     @Override

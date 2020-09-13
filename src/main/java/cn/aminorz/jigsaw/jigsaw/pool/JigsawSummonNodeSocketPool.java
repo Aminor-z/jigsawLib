@@ -16,7 +16,7 @@ public class JigsawSummonNodeSocketPool extends HashMap<JigsawSummonNodeSocketTy
     }
 
     @SafeVarargs
-    public final <TJigsawSummonNodeSocket> void register(Supplier<JigsawSummonNodeSocket>... suppliers) {
+    public final void register(Supplier<JigsawSummonNodeSocket>... suppliers) {
         for (Supplier<JigsawSummonNodeSocket> supplier : suppliers) {
             register(supplier);
         }

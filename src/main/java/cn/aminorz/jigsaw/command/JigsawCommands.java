@@ -1,5 +1,6 @@
 package cn.aminorz.jigsaw.command;
 
+import cn.aminorz.jigsaw.command.command.Command_Multithreading;
 import cn.aminorz.jigsaw.command.command.Command_Pattern;
 import cn.aminorz.jigsaw.command.command.Command_Structure_Generate;
 import cn.aminorz.jigsaw.command.command.Command_Structure_List;
@@ -25,6 +26,8 @@ import static net.minecraft.command.ISuggestionProvider.suggest;
 
 @Mod.EventBusSubscriber
 public class JigsawCommands {
+    private static boolean useMultithreading = true;
+
     @SubscribeEvent
     public static void onServerStaring(FMLServerStartingEvent event) {
         CommandDispatcher<CommandSource> dispatcher = event.getCommandDispatcher();
@@ -61,19 +64,19 @@ public class JigsawCommands {
                         literal("pattern").then(
                                 literal("p1").then(
                                         argument("x", IntegerArgumentType.integer()).then(
-                                                argument("y",IntegerArgumentType.integer()).then(
-                                                        argument("z",IntegerArgumentType.integer())
-                                        .requires((commandSource) -> {
-                                            return commandSource.hasPermissionLevel(2);
-                                        })
-                                        .executes(Command_Pattern.POS_1_SET)))))));
+                                                argument("y", IntegerArgumentType.integer()).then(
+                                                        argument("z", IntegerArgumentType.integer())
+                                                                .requires((commandSource) -> {
+                                                                    return commandSource.hasPermissionLevel(2);
+                                                                })
+                                                                .executes(Command_Pattern.POS_1_SET)))))));
         dispatcher.register(
                 literal("jigsaw").then(
                         literal("pattern").then(
                                 literal("p2").then(
                                         argument("x", IntegerArgumentType.integer()).then(
-                                                argument("y",IntegerArgumentType.integer()).then(
-                                                        argument("z",IntegerArgumentType.integer())
+                                                argument("y", IntegerArgumentType.integer()).then(
+                                                        argument("z", IntegerArgumentType.integer())
                                                                 .requires((commandSource) -> {
                                                                     return commandSource.hasPermissionLevel(2);
                                                                 })
@@ -104,5 +107,28 @@ public class JigsawCommands {
                                                     return commandSource.hasPermissionLevel(2);
                                                 })
                                                 .executes(Command_Pattern.LOAD)))));
+        dispatcher.register(
+                literal("jigsaw").then(
+                        literal("multithreading").then(
+                                literal("true")
+                                        .requires((commandSource) -> {
+                                            return commandSource.hasPermissionLevel(2);
+                                        })
+                                        .executes(Command_Multithreading.ON))));
+        dispatcher.register(
+                literal("jigsaw").then(
+                        literal("multithreading").then(
+                                literal("false")
+                                        .requires((commandSource) -> {
+                                            return commandSource.hasPermissionLevel(2);
+                                        })
+                                        .executes(Command_Multithreading.OFF))));
+        dispatcher.register(
+                literal("jigsaw").then(
+                        literal("multithreading")
+                                .requires((commandSource) -> {
+                                    return commandSource.hasPermissionLevel(2);
+                                })
+                                .executes(Command_Multithreading.SHOW)));
     }
 }

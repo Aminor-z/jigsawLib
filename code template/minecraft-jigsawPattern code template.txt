@@ -8,9 +8,12 @@ import cn.aminorz.jigsaw.jigsaw.pool.JigsawOccupiedSectionPool;
 import cn.aminorz.jigsaw.jigsaw.pool.JigsawSummonNodeSocketPool;
 import cn.aminorz.jigsaw.jigsaw.pool.JigsawSummonNodesPool;
 import cn.aminorz.jigsaw.util.math.JigsawSectionPos;
-import cn.aminorz.jigsaw.util.math.SimpleDirection;
+
+import static cn.aminorz.jigsaw.util.math.SimpleDirection.*;
 
 public class ${NAME} implements IJigsawPattern {
+    private static final ${NAME} instance=new ${NAME}();
+    public static ${NAME} getInstance(){return instance;}
     private static final JigsawSummonNodesPool summonNodes = new JigsawSummonNodesPool();
     private static final JigsawOccupiedSectionPool occupiedSectionPool = new JigsawOccupiedSectionPool();
     private static final JigsawSummonNodeSocketPool summonNodeSocketPool = new JigsawSummonNodeSocketPool();
@@ -18,6 +21,7 @@ public class ${NAME} implements IJigsawPattern {
     static {
         //register summonNodes here
     }
+
     static {
         //register occupiedSectionPool here
     }

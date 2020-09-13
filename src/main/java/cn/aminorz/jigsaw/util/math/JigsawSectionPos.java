@@ -38,7 +38,7 @@ public class JigsawSectionPos {
         return new JigsawSectionPos(this.x + jigsawSectionPos.x, this.y + jigsawSectionPos.y, this.z + jigsawSectionPos.z);
     }
 
-    public JigsawSectionPos minus(JigsawSectionPos jigsawSectionPos) {
+    public JigsawSectionPos subtract(JigsawSectionPos jigsawSectionPos) {
         return new JigsawSectionPos(this.x - jigsawSectionPos.x, this.y - jigsawSectionPos.y, this.z - jigsawSectionPos.z);
     }
 

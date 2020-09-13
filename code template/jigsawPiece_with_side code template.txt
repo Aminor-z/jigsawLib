@@ -18,7 +18,7 @@ public class ${NAME} extends JigsawPiece {
     private static final ${NAME} instance=new ${NAME}();
     public static ${NAME} getInstance(){return instance;}
     //set your registered feature here
-    private static final IStructurePieceType iStructurePieceType = ISPT_${NAME};
+    private static final IStructurePieceType ISPT_${NAME} = ISPT_${NAME};
     //set your nbt file here
     private static  final ResourceLocation resourceLocation = new ResourceLocation("modid","NBT_StructureLocation");
     private static JigsawSide jigsawSide = new JigsawSide();

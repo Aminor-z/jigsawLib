@@ -18,7 +18,7 @@ public class JigsawSummonNodeSocket {
     /**
      * @param jigsawPattern self-jigsawPattern
      */
-    public JigsawSummonNodeSocket(SimpleDirection simpleDirection, JigsawSectionPos socketSectionPos, String type, int weight, Supplier<IJigsawPattern> jigsawPattern) {
+    public JigsawSummonNodeSocket(JigsawSectionPos socketSectionPos, SimpleDirection simpleDirection, String type, int weight, Supplier<IJigsawPattern> jigsawPattern) {
         this.simpleDirection = simpleDirection;
         this.socketSectionPos = socketSectionPos;
         this.type = new JigsawSummonNodeSocketType(type);
@@ -30,7 +30,7 @@ public class JigsawSummonNodeSocket {
         return ignoreOccupation;
     }
 
-    public JigsawSummonNodeSocket setIgnoreOccupation(boolean b) {
+    public cn.aminorz.jigsaw.jigsaw.JigsawSummonNodeSocket setIgnoreOccupation(boolean b) {
         ignoreOccupation = b;
         return this;
     }

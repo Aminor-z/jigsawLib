@@ -46,8 +46,9 @@ public class Command_Structure_Generate implements Command<CommandSource> {
         CommandSource source = context.getSource();
         BlockPos currentBlockPos = getCurrentBlockPos(context);
         ChunkPos currentChunkPos = new ChunkPos(currentBlockPos.getX() >> 4, currentBlockPos.getZ() >> 4);
-        String[] target_string_array = context.getArgument("structure_type", ResourceLocation.class).toString().toLowerCase(Locale.ROOT).split(":");
-        String target = target_string_array.length > 1 ? target_string_array[1] : target_string_array[0];
+        String target_string = context.getArgument("structure_type", ResourceLocation.class).toString().toLowerCase(Locale.ROOT);
+        String[] target_string_array=target_string.split(":");
+        String target = target_string_array[0].equals("minecraft") ? target_string_array[1] : target_string;
         Structure<?> structure = Feature.STRUCTURES.get(target);
         StringTextComponent stc;
         if (structure == null) {

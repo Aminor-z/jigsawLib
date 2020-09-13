@@ -1,5 +1,6 @@
 package cn.aminorz.jigsaw.jigsaw;
 
+import cn.aminorz.jigsaw.jigsaw.JigsawType;
 import jdk.nashorn.internal.ir.annotations.Immutable;
 
 @Immutable

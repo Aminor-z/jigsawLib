@@ -1,14 +1,14 @@
 #if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "")package ${PACKAGE_NAME};#end
 #parse("File Header.java")
 
-import cn.aminorz.jigsaw.jigsaw.IJigsawPattern;
-import cn.aminorz.jigsaw.jigsaw.JigsawSummonNode;
-import cn.aminorz.jigsaw.jigsaw.JigsawSummonNodeSocket;
-import cn.aminorz.jigsaw.jigsaw.pool.JigsawOccupiedSectionPool;
-import cn.aminorz.jigsaw.jigsaw.pool.JigsawSummonNodeSocketPool;
-import cn.aminorz.jigsaw.jigsaw.pool.JigsawSummonNodesPool;
-import cn.aminorz.jigsaw.util.math.JigsawSectionPos;
-import cn.aminorz.jigsaw.util.math.SimpleDirection;
+import cn.aminorz.cn.aminorz.jigsaw.jigsaw.cn.aminorz.jigsaw.jigsaw.IJigsawPattern;
+import cn.aminorz.cn.aminorz.jigsaw.jigsaw.cn.aminorz.jigsaw.jigsaw.JigsawSummonNode;
+import cn.aminorz.cn.aminorz.jigsaw.jigsaw.cn.aminorz.jigsaw.jigsaw.JigsawSummonNodeSocket;
+import cn.aminorz.cn.aminorz.jigsaw.jigsaw.cn.aminorz.jigsaw.jigsaw.pool.JigsawOccupiedSectionPool;
+import cn.aminorz.cn.aminorz.jigsaw.jigsaw.cn.aminorz.jigsaw.jigsaw.pool.JigsawSummonNodeSocketPool;
+import cn.aminorz.cn.aminorz.jigsaw.jigsaw.cn.aminorz.jigsaw.jigsaw.pool.JigsawSummonNodesPool;
+import cn.aminorz.cn.aminorz.jigsaw.jigsaw.util.math.JigsawSectionPos;
+import cn.aminorz.cn.aminorz.jigsaw.jigsaw.util.math.SimpleDirection;
 
 public class ${NAME} implements IJigsawPattern {
     private static final JigsawSummonNodesPool summonNodes = new JigsawSummonNodesPool();

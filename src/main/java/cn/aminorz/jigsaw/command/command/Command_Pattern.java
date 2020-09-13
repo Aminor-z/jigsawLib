@@ -163,9 +163,9 @@ public class Command_Pattern {
                         }
                         BlockPos sourcePos = new BlockPos(min(p1.getX(), p2.getX()), min(p1.getY(), p2.getY()), min(p1.getZ(), p2.getZ()));
                         BlockPos size = new BlockPos(
-                                max(p1.getX(), p2.getX()) - min(p1.getX(), p2.getX()) + 1,
-                                max(p1.getY(), p2.getY()) - min(p1.getY(), p2.getY()) + 1,
-                                max(p1.getZ(), p2.getZ()) - min(p1.getZ(), p2.getZ()) + 1
+                                max(p1.getX(), p2.getX()) - min(p1.getX(), p2.getX())+1,
+                                max(p1.getY(), p2.getY()) - min(p1.getY(), p2.getY())+1,
+                                max(p1.getZ(), p2.getZ()) - min(p1.getZ(), p2.getZ())+1
                         );
                         p1 = null;
                         p2 = null;

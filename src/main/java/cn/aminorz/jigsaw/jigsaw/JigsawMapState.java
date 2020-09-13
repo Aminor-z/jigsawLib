@@ -1,16 +1,22 @@
 package cn.aminorz.jigsaw.jigsaw;
 
+import cn.aminorz.jigsaw.jigsaw.IJigsawPattern;
+import cn.aminorz.jigsaw.jigsaw.JigsawPiece;
 import cn.aminorz.jigsaw.util.math.JigsawSectionPos;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class JigsawMapState extends HashMap<JigsawSectionPos, JigsawPiece> {
 
     public void register(JigsawSectionPos jigsawSectionPos, IJigsawPattern jigsawPattern) {
         if (jigsawSectionPos != null && jigsawPattern != null && jigsawPattern.getOccupiedSectionPool() != null)
-            for (Map.Entry<JigsawSectionPos, JigsawPiece> entry : jigsawPattern.getOccupiedSectionPool().entrySet()) {
-                put(entry.getKey().add(jigsawSectionPos), entry.getValue());
+            for (Entry<JigsawSectionPos, JigsawPiece> entry : jigsawPattern.getOccupiedSectionPool().entrySet()) {
+
+                try {
+                    put(entry.getKey().add(jigsawSectionPos), entry.getValue().getNewInstance());
+                } catch (IllegalAccessException | InstantiationException e) {
+                    e.printStackTrace();
+                }
             }
     }
 }

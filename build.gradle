@@ -1,5 +1,6 @@
 buildscript {
     repositories {
+        mavenLocal()
         maven { url = 'https://files.minecraftforge.net/maven' }
         jcenter()
         mavenCentral()
@@ -13,9 +14,9 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '1.15.2-1.0.1-forge'
-group = 'cn.aminorz.jigsaw' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = 'jigsaw'
+version = '1.15.2-1.0.2-forge'
+group = 'cn.aminorz.cn.aminorz.jigsaw.jigsaw' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = 'cn.aminorz.jigsaw.jigsaw'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 //Print out JVM information so that we know what version is running. Extreamly useful for people to know when helping you.
@@ -27,9 +28,9 @@ minecraft {
     // stable_#            Stables are built at the discretion of the MCP team.
     // Use non-default mappings at your own risk. they may not always work.
     // Simply re-run your setup task after changing the mappings to update your workspace.
-    mappings channel: 'snapshot', version: '20200812-1.15.1'
+    mappings channel: 'snapshot', version: '20200901-1.15.1'
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
-    
+
     // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
     // Default run configurations.
@@ -76,7 +77,7 @@ minecraft {
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
 
-            args '--mod', 'jigsaw', '--all', '--output', file('src/generated/resources/')
+            args '--mod', 'cn.aminorz.jigsaw.jigsaw', '--all', '--output', file('src/generated/resources/')
 
             mods {
                 examplemod {
@@ -92,7 +93,7 @@ dependencies {
     // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft 'net.minecraftforge:forge:1.15.2-31.2.36'
-
+    //minecraft 'net.minecraftforge:forge:1.16.2-33.0.61'
     // You may put jars on which you depend on in ./libs or you may define them like so..
     // compile "some.group:artifact:version:classifier"
     // compile "some.group:artifact:version"
@@ -117,7 +118,7 @@ dependencies {
 jar {
     manifest {
         attributes([
-            "Specification-Title": "jigsaw",
+            "Specification-Title": "cn.aminorz.jigsaw.jigsaw",
             "Specification-Vendor": "jigsawsareus",
             "Specification-Version": "1.0", // We are version 1 of ourselves
             "Implementation-Title": project.name,
@@ -130,10 +131,9 @@ jar {
 
 // Example configuration to allow publishing using the maven-publish task
 // This is the preferred method to reobfuscate your jar file
-jar.finalizedBy('reobfJar') 
+//jar.finalizedBy('reobfJar')
 // However if you are in a multi-project build, dev time needs unobfed jar files, so you can delay the obfuscation until publishing by doing
 //publish.dependsOn('reobfJar')
-
 publishing {
     publications {
         mavenJava(MavenPublication) {

@@ -1,7 +1,7 @@
 #if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "")package ${PACKAGE_NAME};#end
 #parse("File Header.java")
 
-import cn.aminorz.jigsaw.jigsaw.JigsawSide;
+import cn.aminorz.cn.aminorz.jigsaw.jigsaw.cn.aminorz.jigsaw.jigsaw.JigsawSide;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;

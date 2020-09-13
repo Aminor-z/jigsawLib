@@ -1,7 +1,7 @@
-package cn.aminorz.jigsaw.test.piece;
+package cn.aminorz.cn.aminorz.jigsaw.jigsaw.test.piece;
 
-import cn.aminorz.jigsaw.jigsaw.IJigsawPiece;
-import cn.aminorz.jigsaw.jigsaw.JigsawSide;
+import cn.aminorz.cn.aminorz.jigsaw.jigsaw.cn.aminorz.jigsaw.jigsaw.IJigsawPiece;
+import cn.aminorz.cn.aminorz.jigsaw.jigsaw.cn.aminorz.jigsaw.jigsaw.JigsawSide;
 
 public class ${NAME} implements IJigsawPiece {
     public static JigsawSide jigsawSide = new JigsawSide();

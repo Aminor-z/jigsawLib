@@ -11,7 +11,6 @@ import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.arguments.ResourceLocationArgument;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
@@ -44,7 +43,7 @@ public class JigsawCommands {
                                                 .suggests(new SuggestionProvider<CommandSource>() {
                                                     @Override
                                                     public CompletableFuture<Suggestions> getSuggestions(CommandContext<CommandSource> commandSourceCommandContext, SuggestionsBuilder suggestionsBuilder) {
-                                                        return suggest(GameData.getStructureFeatures().keySet().stream().map(ResourceLocation::toString), suggestionsBuilder);
+                                                        return suggest(GameData.getStructureMap().keySet().toArray(new String[0]), suggestionsBuilder);
                                                     }
                                                 })
                                                 .executes(Command_Structure_Generate.instance)))));

@@ -17,7 +17,7 @@ import net.minecraft.world.gen.feature.template.TemplateManager;
 import java.util.Random;
 
 public abstract class JigsawPiece extends TemplateStructurePiece implements IJigsawPiece {
-    public static cn.aminorz.jigsaw.jigsaw.JigsawPiece PLACEHOLDER = new Placeholder();
+    public static final JigsawPiece PLACEHOLDER = new Placeholder();
     public JigsawPiece() {
         super(null, 0);
     }
@@ -37,15 +37,12 @@ public abstract class JigsawPiece extends TemplateStructurePiece implements IJig
     }
 
     public JigsawPiece getNewInstance() throws IllegalAccessException, InstantiationException {
-        synchronized (this) {
             return this.getClass().newInstance();
-        }
     }
 
     protected abstract ResourceLocation getResourceLocation();
-
     protected abstract boolean isIgnoreEntities();
-
+    protected abstract boolean isVirtual();
     public cn.aminorz.jigsaw.jigsaw.JigsawPiece setPosition(BlockPos blockPos) {
         this.templatePosition = blockPos;
         return this;
@@ -67,6 +64,11 @@ public abstract class JigsawPiece extends TemplateStructurePiece implements IJig
         @Override
         protected boolean isIgnoreEntities() {
             return true;
+        }
+
+        @Override
+        protected boolean isVirtual() {
+            return false;
         }
 
         @Override
@@ -132,6 +134,11 @@ public abstract class JigsawPiece extends TemplateStructurePiece implements IJig
         @Override
         protected boolean isIgnoreEntities() {
             return true;
+        }
+
+        @Override
+        protected boolean isVirtual() {
+            return false;
         }
 
         @Override

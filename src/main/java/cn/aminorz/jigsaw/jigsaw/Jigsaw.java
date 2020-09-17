@@ -16,20 +16,6 @@ public abstract class Jigsaw {
         this.jigsawStructureGenerator = jigsawStructureGenerator;
     }
 
-    public void print(ArrayList<Pair<BlockPos, JigsawPiece>> key) {
-        System.out.println("cn.aminorz.jigsaw.Jigsaw[" + this.getClass().getName() + "] print jigsawPool data:{");
-        key.sort(new Comparator<Pair<BlockPos, JigsawPiece>>() {
-            @Override
-            public int compare(Pair<BlockPos, JigsawPiece> o1, Pair<BlockPos, JigsawPiece> o2) {
-                return o1.getKey().hashCode() - o2.getKey().hashCode();
-            }
-        });
-        for (Pair<BlockPos, JigsawPiece> i : key) {
-            System.out.println("\t" + i.getKey().toString() + " => " + i.getValue().getClass().getSimpleName());
-        }
-        System.out.println("} => " + key.size() + " items.");
-    }
-
     private <V extends IJigsawPattern> ArrayList<Pair<BlockPos, JigsawPiece>> generate(int x, int y, int z, Supplier<V> beginPattern) {
         jigsawStructureGenerator.generate(JigsawSectionPos.ZERO, beginPattern.get());
         HashMap<JigsawSectionPos, JigsawPiece> t = jigsawStructureGenerator.getJigsawMapState();

@@ -89,7 +89,25 @@ public class JigsawSectionPos {
                 return ZERO;
         }
     }
-
+    public JigsawSectionPos subtract(SimpleDirection simpleDirection) {
+        switch (simpleDirection) {
+            case NONE:
+                return this.clone();
+            case EAST:
+                return getWest();
+            case SOUTH:
+                return getNorth();
+            case WEST:
+                return getEast();
+            case NORTH:
+                return getSouth();
+            case UP:
+                return getDown();
+            case DOWN:
+                return getUp();
+            default:
+                return ZERO;
+        }    }
     public  JigsawSectionPos getMinus() {
         return new JigsawSectionPos(-this.x, -this.y, -this.z);
     }
@@ -120,5 +138,10 @@ public class JigsawSectionPos {
             e.printStackTrace();
             return new JigsawSectionPos(this.x, this.y, this.z);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "JigsawSectionPos["+x+","+y+","+z+"]";
     }
 }

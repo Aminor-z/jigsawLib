@@ -25,7 +25,7 @@ public class Select_Tool_Pos1 extends Item {
         if (!world.isRemote && rayTraceResult.getType() == RayTraceResult.Type.BLOCK) {
             BlockPos blockPos = ((BlockRayTraceResult) rayTraceResult).getPos();
             Command_Pattern.p1 = blockPos;
-            playerEntity.sendMessage(new StringTextComponent("[Jigsaw-Pattern]: P2 set to -> ").appendText(blockPos.toString()));
+            playerEntity.sendMessage(new StringTextComponent("[Jigsaw-Pattern]: P1 set to -> ").appendText(blockPos.toString()));
             return ActionResult.resultSuccess(playerEntity.getHeldItem(hand));
         }
         return ActionResult.resultPass(playerEntity.getHeldItem(hand));

@@ -1,4 +1,4 @@
-package cn.aminorz.jigsaw.util;
+package cn.aminorz.jigsaw.util.random;
 
 import jdk.nashorn.internal.ir.annotations.Immutable;
 

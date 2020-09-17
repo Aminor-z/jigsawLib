@@ -4,13 +4,14 @@ import cn.aminorz.jigsaw.exception.JigsawTypeException;
 import cn.aminorz.jigsaw.exception.JigsawUnsetException;
 import cn.aminorz.jigsaw.jigsaw.pool.JigsawOccupiedSectionPool;
 import cn.aminorz.jigsaw.jigsaw.pool.JigsawSummonNodesPool;
-import cn.aminorz.jigsaw.util.WeightRandomItem;
-import cn.aminorz.jigsaw.util.WeightedRandom;
 import cn.aminorz.jigsaw.util.math.JigsawSectionPos;
 import cn.aminorz.jigsaw.util.math.SimpleDirection;
+import cn.aminorz.jigsaw.util.random.WeightRandomItem;
+import cn.aminorz.jigsaw.util.random.WeightedRandom;
 import javafx.util.Pair;
 
 import java.util.*;
+import java.util.function.Function;
 
 
 public class JigsawStructureGenerator implements IJigsawInitializable {
@@ -22,23 +23,34 @@ public class JigsawStructureGenerator implements IJigsawInitializable {
     private Integer limit;
     private JigsawMapState jigsawMapState = new JigsawMapState();
     private Mode mode = Mode.NONE;
+    private Function<LinkedList<WeightRandomItem<Pair<JigsawSectionPos, IJigsawPattern>>>, Pair<JigsawSectionPos, IJigsawPattern>> WeightRandomFunction;
     /**
      * If make it on, you must promise that the DFS or Mode will not become an endless loop.
      */
     private boolean terminatorChecker = false;
+    private Function<LinkedList<WeightRandomItem<Pair<JigsawSectionPos, IJigsawPattern>>>, Pair<JigsawSectionPos, IJigsawPattern>> defaultWeightRandomFunction = weightRandomItems -> {
+        return new WeightedRandom<>(weightRandomItems).getRandomObj();
+    };
 
     public JigsawStructureGenerator() {
+        WeightRandomFunction = defaultWeightRandomFunction;
     }
 
     public JigsawStructureGenerator(JigsawPool jigsawPool) {
         jigsawPool.init();
         this.jigsawPool = jigsawPool;
+        WeightRandomFunction = defaultWeightRandomFunction;
+    }
+
+    public JigsawStructureGenerator setWeightRandomFunction(Function<LinkedList<WeightRandomItem<Pair<JigsawSectionPos, IJigsawPattern>>>, Pair<JigsawSectionPos, IJigsawPattern>> weightRandomFunction) {
+        this.WeightRandomFunction = weightRandomFunction;
+        return this;
     }
 
     /**
      * If make it on, you must promise that the  DFS or BFS will not become an endless loop.
      */
-    public cn.aminorz.jigsaw.jigsaw.JigsawStructureGenerator setTerminatorChecker(boolean terminatorChecker) {
+    public JigsawStructureGenerator setTerminatorChecker(boolean terminatorChecker) {
         this.terminatorChecker = terminatorChecker;
         return this;
     }
@@ -47,7 +59,7 @@ public class JigsawStructureGenerator implements IJigsawInitializable {
         return mode;
     }
 
-    public cn.aminorz.jigsaw.jigsaw.JigsawStructureGenerator setMode(Mode mode) {
+    public JigsawStructureGenerator setMode(Mode mode) {
         try {
             if (mode.equals(Mode.NONE))
                 throw new JigsawTypeException(mode);
@@ -62,7 +74,7 @@ public class JigsawStructureGenerator implements IJigsawInitializable {
         return jigsawMapState;
     }
 
-    public cn.aminorz.jigsaw.jigsaw.JigsawStructureGenerator reset() {
+    public JigsawStructureGenerator reset() {
         jigsawMapState = null;
         jigsawMapState = new JigsawMapState();
         return this;
@@ -72,7 +84,7 @@ public class JigsawStructureGenerator implements IJigsawInitializable {
         return jigsawPool;
     }
 
-    public cn.aminorz.jigsaw.jigsaw.JigsawStructureGenerator setJigsawPool(JigsawPool jigsawPool) {
+    public JigsawStructureGenerator setJigsawPool(JigsawPool jigsawPool) {
         this.jigsawPool = jigsawPool;
         this.jigsawPool.init();
         return this;
@@ -82,7 +94,7 @@ public class JigsawStructureGenerator implements IJigsawInitializable {
         return limit;
     }
 
-    public cn.aminorz.jigsaw.jigsaw.JigsawStructureGenerator setLimit(Integer limit) {
+    public JigsawStructureGenerator setLimit(Integer limit) {
         this.limit = limit;
         return this;
     }
@@ -120,27 +132,24 @@ public class JigsawStructureGenerator implements IJigsawInitializable {
             if (currentPattern.getSummonNodes() != null)
                 for (JigsawSummonNode summonNode : currentPattern.getSummonNodes()) {
                     LinkedList<WeightRandomItem<Pair<JigsawSectionPos, IJigsawPattern>>> validPatterns = getValidPatterns(summonNode, currentPos);
-                    WeightedRandom<Pair<JigsawSectionPos, IJigsawPattern>> weightedRandom = new WeightedRandom<>(validPatterns);
-                    if (!weightedRandom.isEmpty()) {
-                        Pair<JigsawSectionPos, IJigsawPattern> patternPair = weightedRandom.getRandomObj();
-                        if (patternPair != null) {
-                            IJigsawPattern iJigsawPattern = patternPair.getValue();
-                            JigsawSectionPos actualPos = currentPos.add(patternPair.getKey());
-                            jigsawMapState.register(actualPos, iJigsawPattern);
-                            ++counter;
-                            JigsawSummonNodesPool nextSummonNodes = iJigsawPattern.getSummonNodes();
-                            if (nextSummonNodes != null)
-                                for (JigsawSummonNode nextSummonNode : nextSummonNodes) {
-                                    //next start point(startPos)
-                                    //JigsawSectionPos nextCurrentPos = actualPos.add(nextSummonNode.getNodeSectionPos()).add(nextSummonNode.getSimpleDirection());
-                                    JigsawSectionPos nextCurrentPos = actualPos;
-                                    if (terminatorChecker && nextSummonNode.isTerminator() && counter == limit) {
-                                        BFS_QUEUE.add(new Pair<>(nextCurrentPos, iJigsawPattern));
-                                    } else if (counter <= limit) {
-                                        BFS_QUEUE.add(new Pair<>(nextCurrentPos, iJigsawPattern));
-                                    }
+                    Pair<JigsawSectionPos, IJigsawPattern> patternPair = WeightRandomFunction.apply(validPatterns);
+                    if (patternPair != null) {
+                        IJigsawPattern iJigsawPattern = patternPair.getValue();
+                        JigsawSectionPos actualPos = currentPos.add(patternPair.getKey());
+                        jigsawMapState.register(actualPos, iJigsawPattern);
+                        ++counter;
+                        JigsawSummonNodesPool nextSummonNodes = iJigsawPattern.getSummonNodes();
+                        if (nextSummonNodes != null)
+                            for (JigsawSummonNode nextSummonNode : nextSummonNodes) {
+                                //next start point(startPos)
+                                //JigsawSectionPos nextCurrentPos = actualPos.add(nextSummonNode.getNodeSectionPos()).add(nextSummonNode.getSimpleDirection());
+                                JigsawSectionPos nextCurrentPos = actualPos;
+                                if (terminatorChecker && nextSummonNode.isTerminator() && counter == limit) {
+                                    BFS_QUEUE.add(new Pair<>(nextCurrentPos, iJigsawPattern));
+                                } else if (counter <= limit) {
+                                    BFS_QUEUE.add(new Pair<>(nextCurrentPos, iJigsawPattern));
                                 }
-                        }
+                            }
                     }
                 }
         } while ((BFS_QUEUE.size() != 0));
@@ -152,24 +161,23 @@ public class JigsawStructureGenerator implements IJigsawInitializable {
             for (JigsawSummonNode summonNode : startPattern.getSummonNodes()) {
                 LinkedList<WeightRandomItem<Pair<JigsawSectionPos, IJigsawPattern>>> validPatterns = getValidPatterns(summonNode, startPos);
                 WeightedRandom<Pair<JigsawSectionPos, IJigsawPattern>> weightedRandom = new WeightedRandom<>(validPatterns);
-                if (!weightedRandom.isEmpty()) {
-                    Pair<JigsawSectionPos, IJigsawPattern> patternPair = weightedRandom.getRandomObj();
-                    if (patternPair != null) {
-                        IJigsawPattern iJigsawPattern = patternPair.getValue();
-                        JigsawSectionPos socketPosition = patternPair.getValue().getSummonNodeSocketPool().get(summonNode.getSimpleDirection()).get(summonNode.getJigsawSummonNodeType()).getSocketSectionPos();
-                        JigsawSectionPos actualPos = startPos.add(patternPair.getKey()).add(summonNode.getSimpleDirection()).add(socketPosition);
-                        jigsawMapState.register(actualPos, iJigsawPattern);
-                        JigsawSummonNodesPool nextSummonNodes = iJigsawPattern.getSummonNodes();
-                        if (nextSummonNodes != null)
-                            for (JigsawSummonNode nextSummonNode : nextSummonNodes) {
-                                //next start point(startPos)
-                                JigsawSectionPos nextCurrentPos = actualPos.add(nextSummonNode.getNodeSectionPos());
-                                DFS_generate(nextCurrentPos, iJigsawPattern, 1);
-                            }
-                    }
+                Pair<JigsawSectionPos, IJigsawPattern> patternPair = WeightRandomFunction.apply(validPatterns);
+                if (patternPair != null) {
+                    IJigsawPattern iJigsawPattern = patternPair.getValue();
+                    JigsawSectionPos socketPosition = patternPair.getValue().getSummonNodeSocketPool().get(summonNode.getSimpleDirection()).get(summonNode.getJigsawSummonNodeType()).getSocketSectionPos();
+                    JigsawSectionPos actualPos = startPos.add(patternPair.getKey()).add(summonNode.getSimpleDirection()).add(socketPosition);
+                    jigsawMapState.register(actualPos, iJigsawPattern);
+                    JigsawSummonNodesPool nextSummonNodes = iJigsawPattern.getSummonNodes();
+                    if (nextSummonNodes != null)
+                        for (JigsawSummonNode nextSummonNode : nextSummonNodes) {
+                            //next start point(startPos)
+                            JigsawSectionPos nextCurrentPos = actualPos.add(nextSummonNode.getNodeSectionPos());
+                            DFS_generate(nextCurrentPos, iJigsawPattern, 1);
+                        }
                 }
             }
     }
+
 
     public void DFS_generate(JigsawSectionPos currentPos, IJigsawPattern currentPattern, final int depth) {
         if (depth > limit)
@@ -178,32 +186,30 @@ public class JigsawStructureGenerator implements IJigsawInitializable {
             for (JigsawSummonNode summonNode : currentPattern.getSummonNodes()) {
                 LinkedList<WeightRandomItem<Pair<JigsawSectionPos, IJigsawPattern>>> validPatterns = getValidPatterns(summonNode, currentPos);
                 WeightedRandom<Pair<JigsawSectionPos, IJigsawPattern>> weightedRandom = new WeightedRandom<>(validPatterns);
-                if (!weightedRandom.isEmpty()) {
-                    Pair<JigsawSectionPos, IJigsawPattern> patternPair = weightedRandom.getRandomObj();
-                    if (patternPair != null) {
-                        IJigsawPattern iJigsawPattern = patternPair.getValue();
-                        JigsawSectionPos socketPosition = patternPair.getValue().getSummonNodeSocketPool().get(summonNode.getSimpleDirection()).get(summonNode.getJigsawSummonNodeType()).getSocketSectionPos();
-                        JigsawSectionPos actualPos = currentPos.add(patternPair.getKey()).add(summonNode.getSimpleDirection()).add(socketPosition);
-                        jigsawMapState.register(actualPos, iJigsawPattern);
-                        JigsawSummonNodesPool nextSummonNodes = iJigsawPattern.getSummonNodes();
-                        if (nextSummonNodes != null)
-                            for (JigsawSummonNode nextSummonNode : nextSummonNodes) {
-                                //next start point(startPos)
-                                JigsawSectionPos nextCurrentPos = actualPos.add(nextSummonNode.getNodeSectionPos());
-                                if (terminatorChecker && nextSummonNode.isTerminator() && depth == limit) {
-                                    DFS_generate(nextCurrentPos, iJigsawPattern, depth);
-                                } else {
-                                    DFS_generate(nextCurrentPos, iJigsawPattern, depth + 1);
-                                }
+                Pair<JigsawSectionPos, IJigsawPattern> patternPair = WeightRandomFunction.apply(validPatterns);
+                if (patternPair != null) {
+                    IJigsawPattern iJigsawPattern = patternPair.getValue();
+                    JigsawSectionPos socketPosition = patternPair.getValue().getSummonNodeSocketPool().get(summonNode.getSimpleDirection()).get(summonNode.getJigsawSummonNodeType()).getSocketSectionPos();
+                    JigsawSectionPos actualPos = currentPos.add(patternPair.getKey()).add(summonNode.getSimpleDirection()).add(socketPosition);
+                    jigsawMapState.register(actualPos, iJigsawPattern);
+                    JigsawSummonNodesPool nextSummonNodes = iJigsawPattern.getSummonNodes();
+                    if (nextSummonNodes != null)
+                        for (JigsawSummonNode nextSummonNode : nextSummonNodes) {
+                            //next start point(startPos)
+                            JigsawSectionPos nextCurrentPos = actualPos.add(nextSummonNode.getNodeSectionPos());
+                            if (terminatorChecker && nextSummonNode.isTerminator() && depth == limit) {
+                                DFS_generate(nextCurrentPos, iJigsawPattern, depth);
+                            } else {
+                                DFS_generate(nextCurrentPos, iJigsawPattern, depth + 1);
                             }
-                    }
+                        }
                 }
             }
     }
 
     /**
      * @param jigsawSummonNode
-     * @param currentPos summon pos
+     * @param currentPos       summon pos
      * @return JigsawSectionPos is the offset pos
      */
     private LinkedList<WeightRandomItem<Pair<JigsawSectionPos, IJigsawPattern>>> getValidPatterns(JigsawSummonNode jigsawSummonNode, JigsawSectionPos currentPos) {
@@ -220,13 +226,15 @@ public class JigsawStructureGenerator implements IJigsawInitializable {
                     for (JigsawSectionPos sectionPos : occupiedSections.keySet()) {
                         //if (jigsawMapState.containsKey(currentPos.add(jigsawSummonNode.getSimpleDirection()).add(jigsawSummonNodeSocketPos).add(sectionPos))) {
                         //JigsawSectionPos actualPos = currentPos.add(jigsawSummonNodeSocketPos).add(summonNode.getSimpleDirection()).add(summonNode.getNodeSectionPos());
-                        if (jigsawMapState.containsKey(currentPos.add(jigsawSummonNode.getNodeSectionPos()).add(jigsawSummonNode.getSimpleDirection()).add(sectionPos).subtract(jigsawSummonNodeSocketPos))) {
+                        JigsawSectionPos transPos = currentPos.add(jigsawSummonNode.getNodeSectionPos()).add(jigsawSummonNode.getSimpleDirection()).add(sectionPos).subtract(jigsawSummonNodeSocketPos);
+                        JigsawPiece piece = jigsawMapState.get(transPos);
+                        if (piece != null && !piece.isVirtual()) {
                             valid = false;
                             break;
                         }
                     }
                 }
-                if (!valid) break;
+                if (!valid) continue;
                 Set<Map.Entry<JigsawSectionPos, JigsawPiece>> sides = jigsawPattern.getOccupiedSectionPool().entrySet();
                 //Set<Map.Entry<JigsawSectionPos, JigsawSide>> sides = jigsawSummonNodeSocket.getJigsawPattern().getSidePool().entrySet();
                 for (Map.Entry<JigsawSectionPos, JigsawPiece> jigsawSectionPosIJigsawPieceEntry : sides) {
@@ -234,7 +242,7 @@ public class JigsawStructureGenerator implements IJigsawInitializable {
                     Map<SimpleDirection, JigsawSideType> simpleDirectionJigsawSideTypeMap = jigsawSectionPosIJigsawPieceEntry.getValue().getJigsawSide();
                     if (simpleDirectionJigsawSideTypeMap != null) {
                         for (Map.Entry<SimpleDirection, JigsawSideType> simpleDirectionJigsawSideTypeEntry : simpleDirectionJigsawSideTypeMap.entrySet()) {
-                            JigsawSectionPos targetPos = currentPos.subtract(jigsawSummonNodeSocket.getSocketSectionPos()).add(sectionPos).add(simpleDirectionJigsawSideTypeEntry.getKey());
+                            JigsawSectionPos targetPos = currentPos.add(jigsawSummonNode.getNodeSectionPos()).add(jigsawSummonNode.getSimpleDirection()).add(sectionPos).subtract(jigsawSummonNodeSocketPos).add(simpleDirectionJigsawSideTypeEntry.getKey());
                             JigsawPiece jigsawPiece = jigsawMapState.get(targetPos);
                             if (jigsawPiece != null)
                             //if directed section pos has piece;
@@ -267,9 +275,8 @@ public class JigsawStructureGenerator implements IJigsawInitializable {
                     );
             }
         }
-        if(validPattern.size()==1)
-        {
-            int a=1;
+        if (validPattern.size() == 1) {
+            int a = 1;
         }
         return validPattern;
     }

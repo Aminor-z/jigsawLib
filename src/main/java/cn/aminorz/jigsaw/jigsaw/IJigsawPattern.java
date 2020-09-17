@@ -11,4 +11,5 @@ public interface IJigsawPattern {
     JigsawSummonNodesPool getSummonNodes();
 
     JigsawSummonNodeSocketPool getSummonNodeSocketPool();
+    JigsawPatternType getJigsawPatternType();
 }

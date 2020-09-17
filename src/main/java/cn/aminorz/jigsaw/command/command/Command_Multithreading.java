@@ -9,7 +9,7 @@ public class Command_Multithreading {
     public static ON ON = new ON();
     public static OFF OFF = new OFF();
     public static SHOW SHOW = new SHOW();
-    private static boolean state = true;
+    private static boolean state = false;
 
     public static boolean state() {
         return state;

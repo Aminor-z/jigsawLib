@@ -17,6 +17,7 @@ public class ${NAME} implements IJigsawPattern {
     private static final JigsawSummonNodesPool summonNodes = new JigsawSummonNodesPool();
     private static final JigsawOccupiedSectionPool occupiedSectionPool = new JigsawOccupiedSectionPool();
     private static final JigsawSummonNodeSocketPool summonNodeSocketPool = new JigsawSummonNodeSocketPool();
+    private static final JigsawPatternType jigsawPatternType = new JigsawPatternType("default");
 
     static {
         //register summonNodes here
@@ -43,5 +44,10 @@ public class ${NAME} implements IJigsawPattern {
     @Override
     public JigsawSummonNodeSocketPool getSummonNodeSocketPool() {
         return summonNodeSocketPool;
+    }
+
+    @Override
+    public JigsawPatternType getJigsawPatternType() {
+        return jigsawPatternType;
     }
 }

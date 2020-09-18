@@ -50,7 +50,7 @@
 ## JigsawSummonNode
 >JigsawSummonNode为生成位点
 >|前缀|	返回值|	函数名称|	参数|	功能及说明|
->|  ----  | ----  |  ----  | ----  | ----  |
+>|  ----  | ----  |  ----  | ----  | ------|
 >|Constructor|||JigsawSectionPos nodeSectionPos, SimpleDirection simpleDirection,String jigsawSummonNodeType|	设置信息的构造函数|
 >|public|	JigsawSummonNode(this)|	setTerminator|	boolean terminator|	设置该生成节点是否为终结点|
 >|public|	boolean|	isTerminator||		返回是否为终结点|

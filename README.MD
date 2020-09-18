@@ -33,7 +33,7 @@
 ## IJigsawPattern
 >IJigsawPattern即为JigsawPattern，是本模组的主要容器
 >	返回值|	函数名称|	参数|	功能及说明|
->|  ----  | ----  |  ----  | ----  | ----  |
+>|  ----  | ----  |  ----  | ----  |
 >| JigsawOccupiedSectionPool|	getOccupiedSectionPool||		获得占用空间信息|
 >|JigsawSummonNodesPool|	getSummonNodes||		获得生成节点信息|
 >|JigsawSummonNodeSocketPool|	getSummonNodeSocketPool	||	获得生成节点接口信息|

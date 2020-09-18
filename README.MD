@@ -32,8 +32,8 @@
 
 ## IJigsawPattern
 >IJigsawPattern即为JigsawPattern，是本模组的主要容器
->	|返回值|	函数名称|	参数|	功能及说明|
->|  ----  | ----  |  ----  | ----  |
+>|返回值|函数名称|参数|功能及说明|
+>|----|----|----|----|
 >|JigsawOccupiedSectionPool|	getOccupiedSectionPool||		获得占用空间信息|
 >|JigsawSummonNodesPool|	getSummonNodes||		获得生成节点信息|
 >|JigsawSummonNodeSocketPool|	getSummonNodeSocketPool	||	获得生成节点接口信息|
@@ -51,7 +51,7 @@
 >JigsawSummonNode为生成位点
 >|前缀|	返回值|	函数名称|	参数|	功能及说明|
 >|  ----  | ----  |  ----  | ----  | ----  |
->Constructor|||			JigsawSectionPos nodeSectionPos, SimpleDirection simpleDirection,String jigsawSummonNodeType|	设置信息的构造函数|
+>|Constructor|||JigsawSectionPos nodeSectionPos, SimpleDirection simpleDirection,String jigsawSummonNodeType|	设置信息的构造函数|
 >|public|	JigsawSummonNode(this)|	setTerminator|	boolean terminator|	设置该生成节点是否为终结点|
 >|public|	boolean|	isTerminator||		返回是否为终结点|
 >|public|	JigsawSectionPos|	getNodeSectionPos	||	获得生成节点位置信息|

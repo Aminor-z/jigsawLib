@@ -75,12 +75,12 @@
 >|前缀|	返回值|	函数名称|	参数|	功能及说明|
 >|  ----  | ----  |  ----  | ----  | ----  |
 >|Constructor||	||			默认构造函数|
->|public|	JigsawSide(this)|	east|	JigsawSideType| jigsawSideType|	设置east方向的侧边信息|
->|public|	JigsawSide(this)|	south|	JigsawSideType| jigsawSideType|	设置south方向的侧边信息|
->|public|	JigsawSide(this)|	west|	JigsawSideType| jigsawSideType|	设置west方向的侧边信息|
->|public|	JigsawSide(this)|	north|	JigsawSideType| jigsawSideType|	设置north方向的侧边信息|
->|public|	JigsawSide(this)|	up|	JigsawSideType| jigsawSideType|	设置up方向的侧边信息|
->|public|	JigsawSide(this)|	down|	JigsawSideType| jigsawSideType|	设置down方向的侧边信息|
+>|public|	JigsawSide(this)|	east|	JigsawSideType jigsawSideType|	设置east方向的侧边信息|
+>|public|	JigsawSide(this)|	south|	JigsawSideType jigsawSideType|	设置south方向的侧边信息|
+>|public|	JigsawSide(this)|	west|	JigsawSideType jigsawSideType|	设置west方向的侧边信息|
+>|public|	JigsawSide(this)|	north|	JigsawSideType jigsawSideType|	设置north方向的侧边信息|
+>|public|	JigsawSide(this)|	up|	JigsawSideType jigsawSideType|	设置up方向的侧边信息|
+>|public|	JigsawSide(this)|	down|	JigsawSideType jigsawSideType|	设置down方向的侧边信息|
 
 ## JigsawSideType
 >JigsawSideType 为侧边类型信息

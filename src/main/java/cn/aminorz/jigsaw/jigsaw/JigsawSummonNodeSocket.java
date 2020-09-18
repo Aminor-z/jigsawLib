@@ -30,7 +30,7 @@ public class JigsawSummonNodeSocket {
         return ignoreOccupation;
     }
 
-    public cn.aminorz.jigsaw.jigsaw.JigsawSummonNodeSocket setIgnoreOccupation(boolean b) {
+    public JigsawSummonNodeSocket setIgnoreOccupation(boolean b) {
         ignoreOccupation = b;
         return this;
     }

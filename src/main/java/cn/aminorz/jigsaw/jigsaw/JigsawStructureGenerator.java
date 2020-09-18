@@ -120,7 +120,7 @@ public class JigsawStructureGenerator implements IJigsawInitializable {
         }
     }
 
-    public void BFS_generate(JigsawSectionPos startPos, IJigsawPattern startPattern) {
+    private void BFS_generate(JigsawSectionPos startPos, IJigsawPattern startPattern) {
         Queue<Pair<JigsawSectionPos, IJigsawPattern>> BFS_QUEUE = new LinkedList<>();
         jigsawMapState.register(startPos, startPattern);
         BFS_QUEUE.add(new Pair<>(startPos, startPattern));
@@ -155,7 +155,7 @@ public class JigsawStructureGenerator implements IJigsawInitializable {
         } while ((BFS_QUEUE.size() != 0));
     }
 
-    public void DFS_generateStarter(JigsawSectionPos startPos, IJigsawPattern startPattern) {
+    private void DFS_generateStarter(JigsawSectionPos startPos, IJigsawPattern startPattern) {
         jigsawMapState.register(startPos, startPattern);
         if (startPattern.getSummonNodes() != null)
             for (JigsawSummonNode summonNode : startPattern.getSummonNodes()) {
@@ -179,7 +179,7 @@ public class JigsawStructureGenerator implements IJigsawInitializable {
     }
 
 
-    public void DFS_generate(JigsawSectionPos currentPos, IJigsawPattern currentPattern, final int depth) {
+    private void DFS_generate(JigsawSectionPos currentPos, IJigsawPattern currentPattern, final int depth) {
         if (depth > limit)
             return;
         if (currentPattern.getSummonNodes() != null)

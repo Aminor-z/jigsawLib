@@ -12,13 +12,6 @@ public class JigsawPool implements IJigsawInitializable {
     private HashMap<JigsawSummonNode, HashSet<JigsawSummonNodeSocket>> reflectJMSP = new HashMap<>();
     private LinkedList<IJigsawPattern> jigsawPatterns;
 
-    public JigsawPool(List<IJigsawPattern> list) {
-        jigsawPatterns = new LinkedList<>();
-        for (IJigsawPattern iJigsawPattern : list) {
-            register(() -> iJigsawPattern);
-        }
-    }
-
     public JigsawPool() {
         jigsawPatterns = new LinkedList<>();
     }

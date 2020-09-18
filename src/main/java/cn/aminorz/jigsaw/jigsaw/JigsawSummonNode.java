@@ -13,11 +13,16 @@ public class JigsawSummonNode {
      * <p>false: the summon node hope it will not be the last of a summon turn.</p>
      * <p>true: the summon node never mind that.</p>
      */
-    private final boolean isTerminator = true;
+    private boolean isTerminator = true;
     public JigsawSummonNode(JigsawSectionPos nodeSectionPos, SimpleDirection simpleDirection, String jigsawSummonNodeType) {
         this.simpleDirection = simpleDirection;
         this.jigsawSummonNodeType = new JigsawSummonNodeSocketType(jigsawSummonNodeType);
         this.nodeSectionPos = nodeSectionPos;
+    }
+
+    public JigsawSummonNode setTerminator(boolean terminator) {
+        isTerminator = terminator;
+        return this;
     }
 
     public boolean isTerminator() {

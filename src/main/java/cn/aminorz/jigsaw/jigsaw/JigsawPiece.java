@@ -43,18 +43,18 @@ public abstract class JigsawPiece extends TemplateStructurePiece implements IJig
     protected abstract ResourceLocation getResourceLocation();
     protected abstract boolean isIgnoreEntities();
     protected abstract boolean isVirtual();
-    public cn.aminorz.jigsaw.jigsaw.JigsawPiece setPosition(BlockPos blockPos) {
+    public JigsawPiece setPosition(BlockPos blockPos) {
         this.templatePosition = blockPos;
         return this;
     }
 
-    public cn.aminorz.jigsaw.jigsaw.JigsawPiece loadTemplate(TemplateManager manager) {
+    public JigsawPiece loadTemplate(TemplateManager manager) {
         Template template = manager.getTemplateDefaulted(getResourceLocation());
         PlacementSettings placementsettings = new PlacementSettings().setIgnoreEntities(isIgnoreEntities());
         this.setup(template, this.templatePosition, placementsettings);
         return this;
     }
-    public static class Placeholder extends cn.aminorz.jigsaw.jigsaw.JigsawPiece {
+    public static class Placeholder extends JigsawPiece {
         public Placeholder(){}
         @Override
         protected ResourceLocation getResourceLocation() {
@@ -85,7 +85,7 @@ public abstract class JigsawPiece extends TemplateStructurePiece implements IJig
             return false;
         }
     }
-    public static class SidePlaceholder extends cn.aminorz.jigsaw.jigsaw.JigsawPiece {
+    public static class SidePlaceholder extends JigsawPiece {
         JigsawSide jigsawSide = new JigsawSide();
         public SidePlaceholder(SimpleDirection simpleDirection, JigsawSideType jigsawSideType) {
             super(null);

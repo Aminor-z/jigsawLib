@@ -1,12 +1,12 @@
 # 概念说明
 ## JigsaSummonNode及JigsaSummonNodeSocket
-![](https://raw.githubusercontent.com/Aminor-z/jigsawLib/master/tutorial/picture/1.png)
+![](https://pic.downk.cc/item/5f6745e6160a154a67fc2f12.png)
 ## 匹配位点与非匹配位点
-![](https://raw.githubusercontent.com/Aminor-z/jigsawLib/master/tutorial/picture/2.png)
+![](https://pic.downk.cc/item/5f6745e6160a154a67fc2f19.png)
 ## 多单元
-![](https://raw.githubusercontent.com/Aminor-z/jigsawLib/master/tutorial/picture/3.png)
+![](https://pic.downk.cc/item/5f6745e6160a154a67fc2f1b.png)
 ## 多单元位点 冲突
-![](https://raw.githubusercontent.com/Aminor-z/jigsawLib/master/tutorial/picture/4.png)
+![](https://pic.downk.cc/item/5f6745e6160a154a67fc2f1e.png)
 # 主要类及函数说明
 ## Jigsaw
 > `Jigsaw`是一个包装好的类。

@@ -1,12 +1,33 @@
+# 代码示例
+*  请参阅github的example文件夹
 # 概念说明
-## JigsaSummonNode及JigsaSummonNodeSocket
+## 生成位点及生成接口位点
 ![1](https://pic.downk.cc/item/5f6745e6160a154a67fc2f12.png)
+> * 生成位点，即JigsawSummonNode。  
+> * 生成接口位点，即JigsawSummonNodeSocket。  
+> * 如果说生成位点是一块拼图的凸，那么生成接口位点就是一块拼图的凹。  
+> * 他们被用于生成的启动，即生成位点。
 ## 匹配位点与非匹配位点
 ![2](https://pic.downk.cc/item/5f6745e6160a154a67fc2f19.png)
+> * 并不是任意生成位点都能适合生成接口位点。  
+> * 类型相同的生成位点和生成接口位点拼接位点称之为匹配位点。  
+> * 类型相同的生成位点和生成接口位点拼接位点称之为非匹配位点。  
+> * 非匹配位点会在生成时被生成器排除。
+## 拼图样板
+> *  即JigsawPattern，是一个存放单元及接口信息的容器。
+## 拼图块
+> * 每一个JigsawPiece被称为一个拼图块。
 ## 多单元
 ![3](https://pic.downk.cc/item/5f6745e6160a154a67fc2f1b.png)
-## 多单元位点 冲突
+> * 拼图样板可以存放一个拼图块，也可以存放多个拼图块。  
+> * 通过多单元组合可以形成不同形状的拼图样板
+## 多单元的位点冲突
 ![4](https://pic.downk.cc/item/5f6745e6160a154a67fc2f1e.png)
+> * 在拼接过程中，即使形成匹配位点，但在实际情况上有时会与已存在的拼图块产生冲突，称之为位点冲突。
+## 拼接过程
+> 1. 以一个生成位点为起点，尝试匹配所有可行的生成接口位点。
+> 2. 剔除所有具有位点冲突的尝试。
+> 3. 使用BFS/DFS经行迭代生成。
 # 主要类及函数说明
 ## Jigsaw
 > `Jigsaw`是一个包装好的类。
@@ -17,7 +38,7 @@
 > |public <V extends IJigsawPattern>|	List<StructurePiece>|	getComponents|	int x, int y, int z, Supplier<V> beginPattern, TemplateManager templateManager|	获得生成的StructurePiece列表|
 
 ## JigsawStructureGenerator
->JigsawStructureGenerator顾名思义，是负责结构生成的具体负责组件。
+>JigsawStructureGenerator是负责结构生成的具体负责组件。
 >|前缀|返回值|函数名称|参数|功能及说明|
 >|  ----  | ----  |  ----  | ----  | ----  |
 >|Constructor|||			JigsawPool jigsawPool||	

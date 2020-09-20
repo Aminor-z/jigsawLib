@@ -27,9 +27,7 @@ public class DefaultLimitedFactorItem extends LimitedFactorItem {
     @Override
     public Float get() {
         if (super.count < super.limit) {
-            float f = super.factor;
-            step();
-            return f;
+            return super.factor;
         } else return 0f;
     }
 }

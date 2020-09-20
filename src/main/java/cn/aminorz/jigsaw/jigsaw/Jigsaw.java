@@ -32,7 +32,7 @@ public abstract class Jigsaw {
         ArrayList<StructurePiece> result = new ArrayList<>(pieces.size());
         for (Pair<BlockPos, JigsawPiece> piece : pieces) {
             result.add(piece.getValue().setPosition(piece.getKey()).loadTemplate(templateManager));
-            System.out.println(piece.getValue().getClass().getSimpleName()+" -> "+piece.getKey());
+            //System.out.println(piece.getValuq3e().getClass().getSimpleName()+" -> "+piece.getKey());
         }
         return result;
     }

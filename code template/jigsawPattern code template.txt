@@ -6,7 +6,7 @@ import cn.aminorz.jigsaw.jigsaw.JigsawSummonNode;
 import cn.aminorz.jigsaw.jigsaw.JigsawSummonNodeSocket;
 import cn.aminorz.jigsaw.jigsaw.pool.JigsawOccupiedSectionPool;
 import cn.aminorz.jigsaw.jigsaw.pool.JigsawSummonNodeSocketPool;
-import cn.aminorz.jigsaw.jigsaw.pool.JigsawSummonNodesPool;
+import cn.aminorz.jigsaw.jigsaw.pool.JigsawSummonNodePool;
 import cn.aminorz.jigsaw.util.math.JigsawSectionPos;
 
 import static cn.aminorz.jigsaw.util.math.SimpleDirection.*;

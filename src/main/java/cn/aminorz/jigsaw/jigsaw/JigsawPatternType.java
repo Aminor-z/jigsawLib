@@ -15,4 +15,21 @@ public class JigsawPatternType extends JigsawType {
     String getType() {
         return type;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        } else if (obj instanceof JigsawPatternType) {
+            JigsawPatternType jigsawPatternType = (JigsawPatternType) obj;
+            return this.type.equals(jigsawPatternType.getType());
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "JigsawPatternType["+super.toString()+"]";
+    }
 }

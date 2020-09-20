@@ -2,24 +2,30 @@ package cn.aminorz.jigsaw.jigsaw;
 
 import jdk.nashorn.internal.ir.annotations.Immutable;
 
+import java.util.Arrays;
 import java.util.HashSet;
 
 @Immutable
 public class JigsawSideType extends JigsawType {
-    public static cn.aminorz.jigsaw.jigsaw.JigsawSideType DENY=new cn.aminorz.jigsaw.jigsaw.JigsawSideType("DENY");
+    public static JigsawSideType DENY=new JigsawSideType("DENY");
     private final HashSet<JigsawSideType> validTypes = new HashSet<>();
     private final String type;
 
     public JigsawSideType(String type) {
         this.type = type;
     }
-    public JigsawSideType(String type, String... validTypes) {
+    public JigsawSideType(String type, JigsawSideType... validTypes) {
         this.type = type;
-        for (String validType : validTypes) {
-            this.validTypes.add(new cn.aminorz.jigsaw.jigsaw.JigsawSideType(validType));
-        }
+        this.validTypes.addAll(Arrays.asList(validTypes));
     }
-
+    public JigsawSideType addValidSideType(JigsawSideType jigsawSideType){
+        validTypes.add(jigsawSideType);
+        return this;
+    }
+    public JigsawSideType addValidSideType(JigsawSideType... jigsawSideType){
+        validTypes.addAll(Arrays.asList(jigsawSideType));
+        return this;
+    }
     public String getType() {
         return type;
     }
@@ -32,11 +38,15 @@ public class JigsawSideType extends JigsawType {
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
-        } else if (obj instanceof cn.aminorz.jigsaw.jigsaw.JigsawSideType) {
-            cn.aminorz.jigsaw.jigsaw.JigsawSideType jigsawSideType = (cn.aminorz.jigsaw.jigsaw.JigsawSideType) obj;
+        } else if (obj instanceof JigsawSideType) {
+            JigsawSideType jigsawSideType = (JigsawSideType) obj;
             return this.type.equals(jigsawSideType.getType());
         } else {
             return false;
         }
+    }
+    @Override
+    public String toString() {
+        return "JigsawSideType["+super.toString()+"]";
     }
 }

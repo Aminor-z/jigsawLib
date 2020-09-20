@@ -16,6 +16,23 @@ public class JigsawSummonNodeSocketType extends JigsawType {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        } else if (obj instanceof JigsawSummonNodeSocketType) {
+            JigsawSummonNodeSocketType jigsawSummonNodeSocketType = (JigsawSummonNodeSocketType) obj;
+            return this.type.equals(jigsawSummonNodeSocketType.getType());
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "JigsawSummonNodeSocketType["+super.toString()+"]";
+    }
+
+    @Override
     String getType() {
         return type;
     }

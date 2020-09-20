@@ -8,9 +8,9 @@ import java.util.function.Supplier;
 
 
 public class JigsawPool implements IJigsawInitializable {
-    private HashSet<Class<? extends IJigsawPattern>> registeredJigsawPiece = new HashSet<>();
-    private HashMap<JigsawSummonNode, HashSet<JigsawSummonNodeSocket>> reflectJMSP = new HashMap<>();
-    private LinkedList<IJigsawPattern> jigsawPatterns;
+    private Set<Class<? extends IJigsawPattern>> registeredJigsawPiece = new HashSet<>();
+    private Map<JigsawSummonNode, Set<JigsawSummonNodeSocket>> reflectJMSP = new HashMap<>();
+    private List<IJigsawPattern> jigsawPatterns;
 
     public JigsawPool() {
         jigsawPatterns = new LinkedList<>();
@@ -28,15 +28,15 @@ public class JigsawPool implements IJigsawInitializable {
         this.jigsawPatterns = jigsawPatterns;
     }
 
-    public LinkedList<IJigsawPattern> getJigsawPatterns() {
+    public List<IJigsawPattern> getJigsawPatterns() {
         return jigsawPatterns;
     }
 
-    public HashSet<Class<? extends IJigsawPattern>> getRegisteredJigsawPiece() {
+    public Set<Class<? extends IJigsawPattern>> getRegisteredJigsawPiece() {
         return registeredJigsawPiece;
     }
 
-    public Map<JigsawSummonNode, HashSet<JigsawSummonNodeSocket>> getReflectJMSP() {
+    public Map<JigsawSummonNode, Set<JigsawSummonNodeSocket>> getReflectJMSP() {
         return reflectJMSP;
     }
 
@@ -58,12 +58,11 @@ public class JigsawPool implements IJigsawInitializable {
             HashSet<JigsawSummonNode> sourceSummonNodes = source.getSummonNodes();
             for (JigsawSummonNode sourceSummonNode : sourceSummonNodes) {
                 for (IJigsawPattern target : jigsawPatterns) {
-                    HashMap<JigsawSummonNodeSocketType, JigsawSummonNodeSocket> jigsawSummonNodeSockets = target.getSummonNodeSocketPool().get(sourceSummonNode.getSimpleDirection().getOpposite());
+                    Map<JigsawSummonNodeSocketType, JigsawSummonNodeSocket> jigsawSummonNodeSockets = target.getSummonNodeSocketPool().get(sourceSummonNode.getSimpleDirection().getOpposite());
                     //JigsawSummonNodeSocket jigsawSummonNodeSocket = target.getSummonNodeSocketPool().get(sourceSummonNode.getJigsawSummonNodeType());
                     if (jigsawSummonNodeSockets != null) {
                         JigsawSummonNodeSocket jigsawSummonNodeSocket = jigsawSummonNodeSockets.get(sourceSummonNode.getJigsawSummonNodeType());
-                        if(jigsawSummonNodeSocket!=null)
-                        {
+                        if (jigsawSummonNodeSocket != null) {
                             //TODO:TEST
                             /*JigsawSectionPos offsetSectionPos =
                                     sourceSummonNode.getNodeSectionPos().add(sourceSummonNode.getSimpleDirection());*/
@@ -82,16 +81,23 @@ public class JigsawPool implements IJigsawInitializable {
                                 if (_t == null) continue;
                                 JigsawSide t = _t.getJigsawSide();
                                 if (t == null) continue;
-                                for (Map.Entry<SimpleDirection, JigsawSideType> targetType : t.entrySet()) {
+                                for (Map.Entry<SimpleDirection, HashSet<JigsawSideType>> targetType : t.entrySet()) {
                                     //summonNode.Direction-summonNodeSocket.Direction==0;
                                     //JigsawSide ttt = source.getSidePool().get(targetSectionPos.add(offsetSectionPos));
                                     IJigsawPiece _ttt = source.getOccupiedSectionPool().get(targetSectionPos.add(offsetSectionPos));
                                     if (_ttt != null) {
                                         JigsawSide ttt = _ttt.getJigsawSide();
                                         if (ttt != null) {
-                                            JigsawSideType qwq = ttt.get(targetType.getKey().getOpposite());
+                                            HashSet<JigsawSideType> qwq = ttt.get(targetType.getKey().getOpposite());
                                             if (qwq != null) {
-                                                if (!qwq.getValidSideTypes().contains(targetType.getValue())) {
+                                                boolean flag = false;
+                                                for (JigsawSideType qaq : qwq) {
+                                                    if (qaq.getValidSideTypes().contains(targetType.getValue())) {
+                                                        flag = true;
+                                                        break;
+                                                    }
+                                                }
+                                                if (!flag) {
                                                     vaildTypeCheck = false;
                                                     break;
                                                 }
@@ -102,7 +108,7 @@ public class JigsawPool implements IJigsawInitializable {
                                 if (!vaildTypeCheck) break;
                             }
                             if (positionCrashCheck && vaildTypeCheck) {
-                                HashSet<JigsawSummonNodeSocket> t = reflectJMSP.get(sourceSummonNode);
+                                Set<JigsawSummonNodeSocket> t = reflectJMSP.get(sourceSummonNode);
                                 if (t != null)
                                     t.add(jigsawSummonNodeSocket);
                                 else {

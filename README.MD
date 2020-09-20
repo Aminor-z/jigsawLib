@@ -1,6 +1,15 @@
+# 概念说明
+## JigsaSummonNode及JigsaSummonNodeSocket
+![](tutorial/picture/1.png)
+## 匹配位点与非匹配位点
+![](tutorial/picture/2.png)
+## 多单元
+![](tutorial/picture/3.png)
+## 多单元位点 冲突
+![](tutorial/picture/4.png)
 # 主要类及函数说明
 ## Jigsaw
-> `Jigsaw`是一个包装好的类，以下是各类函数。
+> `Jigsaw`是一个包装好的类。
 > |前缀|返回值|函数名称|参数|功能及说明|
 > |  ----  | ----  |  ----  | ----  | ----  |
 > |Constructor|||JigsawStructureGenerator||	

@@ -13,8 +13,6 @@ public class DefaultFactorItem extends FactorItem {
 
     @Override
     public Float get() {
-        float f=super.factor;
-        step();
-        return f;
+        return super.factor;
     }
 }

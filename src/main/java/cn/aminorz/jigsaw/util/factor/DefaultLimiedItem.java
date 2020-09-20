@@ -12,8 +12,6 @@ public class DefaultLimiedItem extends LimitedItem {
 
     @Override
     public Float get() {
-        float t = super.count <= super.limit ? 1f : 0f;
-        step();
-        return t;
+        return super.count <= super.limit ? 1f : 0f;
     }
 }

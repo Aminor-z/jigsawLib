@@ -14,9 +14,9 @@ public class JigsawSummonNode {
      * <p>true: the summon node never mind that.</p>
      */
     private boolean isTerminator = true;
-    public JigsawSummonNode(JigsawSectionPos nodeSectionPos, SimpleDirection simpleDirection, String jigsawSummonNodeType) {
+    public JigsawSummonNode(JigsawSectionPos nodeSectionPos, SimpleDirection simpleDirection, JigsawSummonNodeSocketType jigsawSummonNodeType) {
         this.simpleDirection = simpleDirection;
-        this.jigsawSummonNodeType = new JigsawSummonNodeSocketType(jigsawSummonNodeType);
+        this.jigsawSummonNodeType = jigsawSummonNodeType;
         this.nodeSectionPos = nodeSectionPos;
     }
 

@@ -1,6 +1,6 @@
 package cn.aminorz.jigsaw.util.factor;
 
-public interface IFactorItem extends IItemStep, IFactor {
+public interface IFactorItem extends IFactor {
     float getFactor();
 
     void stepFactor();

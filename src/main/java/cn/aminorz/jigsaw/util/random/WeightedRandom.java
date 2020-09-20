@@ -1,17 +1,16 @@
 package cn.aminorz.jigsaw.util.random;
 
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
-//TODO:Wait for optimize...
-public class WeightedRandom<T> extends HashMap<Float, T> {
-    private Float weightSum = 0f;
+import java.util.*;
 
+//TODO:Wait for optimize...
+public class WeightedRandom<T> extends TreeMap<Float, T> {
+    private Random random=new Random();
+    private Float weightSum = 0f;
     public WeightedRandom() {
     }
 
-    public WeightedRandom(LinkedList<WeightRandomItem<T>> weightRandomItems) {
+    public WeightedRandom(List<WeightRandomItem<T>> weightRandomItems) {
         if (weightRandomItems == null) return;
         for (WeightRandomItem<T> weightRandomItem : weightRandomItems) {
             weightSum += weightRandomItem.getWeight();
@@ -19,16 +18,12 @@ public class WeightedRandom<T> extends HashMap<Float, T> {
         }
     }
 
-    public final T getRandomObj() {
-        if (size() == 0) return null;
-        Float random =  (float)(Math.random() * weightSum);
-        for (Map.Entry<Float, T> entry : entrySet()) {
-            if (entry.getKey() >= random) return entry.getValue();
-        }
-        return null;
+    public T getRandomObj() {
+        Map.Entry<Float, T> t=floorEntry(random.nextFloat() * weightSum);
+        return t==null?null:t.getValue();
     }
 
-    public void add(LinkedList<WeightRandomItem<T>> weightRandomItems) {
+    public void add(List<WeightRandomItem<T>> weightRandomItems) {
         if (weightRandomItems == null) return;
         for (WeightRandomItem<T> weightRandomItem : weightRandomItems) {
             weightSum += weightRandomItem.getWeight();

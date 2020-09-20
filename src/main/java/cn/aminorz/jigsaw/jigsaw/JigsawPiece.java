@@ -14,6 +14,7 @@ import net.minecraft.world.gen.feature.template.PlacementSettings;
 import net.minecraft.world.gen.feature.template.Template;
 import net.minecraft.world.gen.feature.template.TemplateManager;
 
+import java.util.HashSet;
 import java.util.Random;
 
 public abstract class JigsawPiece extends TemplateStructurePiece implements IJigsawPiece {
@@ -87,7 +88,7 @@ public abstract class JigsawPiece extends TemplateStructurePiece implements IJig
     }
     public static class SidePlaceholder extends JigsawPiece {
         JigsawSide jigsawSide = new JigsawSide();
-        public SidePlaceholder(SimpleDirection simpleDirection, JigsawSideType jigsawSideType) {
+        public SidePlaceholder(SimpleDirection simpleDirection, HashSet<JigsawSideType> jigsawSideType) {
             super(null);
             jigsawSide.put(simpleDirection, jigsawSideType);
         }
@@ -96,33 +97,33 @@ public abstract class JigsawPiece extends TemplateStructurePiece implements IJig
             super(null);
             this.jigsawSide = jigsawSide;
         }
-        public SidePlaceholder up(JigsawSideType jigsawSideType) {
-            jigsawSide.register(SimpleDirection.UP, jigsawSideType);
+        public SidePlaceholder up(JigsawSideType... jigsawSideType) {
+            jigsawSide.up(jigsawSideType);
             return this;
         }
 
-        public SidePlaceholder down(JigsawSideType jigsawSideType) {
-            jigsawSide.register(SimpleDirection.DOWN, jigsawSideType);
+        public SidePlaceholder down(JigsawSideType... jigsawSideType) {
+            jigsawSide.down(jigsawSideType);
             return this;
         }
 
-        public SidePlaceholder east(JigsawSideType jigsawSideType) {
-            jigsawSide.register(SimpleDirection.EAST, jigsawSideType);
+        public SidePlaceholder east(JigsawSideType... jigsawSideType) {
+            jigsawSide.east(jigsawSideType);
             return this;
         }
 
-        public SidePlaceholder south(JigsawSideType jigsawSideType) {
-            jigsawSide.register(SimpleDirection.SOUTH, jigsawSideType);
+        public SidePlaceholder south(JigsawSideType... jigsawSideType) {
+            jigsawSide.south(jigsawSideType);
             return this;
         }
 
-        public SidePlaceholder west(JigsawSideType jigsawSideType) {
-            jigsawSide.register(SimpleDirection.WEST, jigsawSideType);
+        public SidePlaceholder west(JigsawSideType... jigsawSideType) {
+            jigsawSide.west(jigsawSideType);
             return this;
         }
 
-        public SidePlaceholder north(JigsawSideType jigsawSideType) {
-            jigsawSide.register(SimpleDirection.NORTH, jigsawSideType);
+        public SidePlaceholder north(JigsawSideType... jigsawSideType) {
+            jigsawSide.north(jigsawSideType);
             return this;
         }
 

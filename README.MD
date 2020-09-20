@@ -1,12 +1,12 @@
 # 概念说明
 ## JigsaSummonNode及JigsaSummonNodeSocket
-![](https://pic.downk.cc/item/5f6745e6160a154a67fc2f12.png)
+![1](https://pic.downk.cc/item/5f6745e6160a154a67fc2f12.png)
 ## 匹配位点与非匹配位点
-![](https://pic.downk.cc/item/5f6745e6160a154a67fc2f19.png)
+![2](https://pic.downk.cc/item/5f6745e6160a154a67fc2f19.png)
 ## 多单元
-![](https://pic.downk.cc/item/5f6745e6160a154a67fc2f1b.png)
+![3](https://pic.downk.cc/item/5f6745e6160a154a67fc2f1b.png)
 ## 多单元位点 冲突
-![](https://pic.downk.cc/item/5f6745e6160a154a67fc2f1e.png)
+![4](https://pic.downk.cc/item/5f6745e6160a154a67fc2f1e.png)
 # 主要类及函数说明
 ## Jigsaw
 > `Jigsaw`是一个包装好的类。
